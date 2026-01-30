@@ -29,7 +29,7 @@ document.addEventListener("headerCargado", () => {
   const userArea = document.getElementById("user-area");
   const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-  if (usuario) {
+ /* if (usuario) {
     userArea.innerHTML = `
       <span>Hola, ${usuario.nombre || usuario.email}</span>
       <button id="logout">Salir</button>
@@ -41,5 +41,5 @@ document.addEventListener("headerCargado", () => {
     });
   } else {
     userArea.innerHTML = `<a href="login.html">Iniciar sesión</a>`;
-  }
+  }*/
 });
