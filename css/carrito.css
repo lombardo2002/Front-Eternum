@@ -113,3 +113,64 @@ body {
 .btn:hover {
     opacity: 0.85;
 }
+
+/* ================================
+   MOBILE – CARRITO
+================================ */
+@media (max-width: 768px) {
+
+  body {
+    padding: 10px;
+  }
+
+  .carrito-box {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .carrito-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .img-item {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+  }
+
+  .info h3 {
+    font-size: 18px;
+  }
+
+  .precio {
+    font-size: 16px;
+  }
+
+  .subtotal {
+    font-size: 16px;
+  }
+
+  .cantidad-box {
+    justify-content: center;
+  }
+
+  .botones {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px;
+    border-radius: 25px;
+  }
+
+  .total {
+    font-size: 20px;
+  }
+}
+
