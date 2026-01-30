@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const titulo = document.getElementById("titulo-catalogo");
-  const contenedor = document.getElementById("lista-productos");
 
   const params = new URLSearchParams(window.location.search);
   const materialParam = params.get("material");
@@ -15,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (query.length) url += "?" + query.join("&");
 
   fetch(url)
-    .then(res => res.json())
-    .then(json => {
+    .then((res) => res.json())
+    .then((json) => {
       const productos = json.data;
 
       if (!materialParam && !tipoParam) {
@@ -24,18 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         let t = "";
         if (materialParam) t += materialParam.toUpperCase() + " ";
-        if (tipoParam) t += tipoParam.charAt(0).toUpperCase() + tipoParam.slice(1);
+        if (tipoParam)
+          t += tipoParam.charAt(0).toUpperCase() + tipoParam.slice(1);
         titulo.textContent = t.trim();
       }
 
       mostrarProductos(productos);
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("Error cargando productos:", err);
       titulo.textContent = "Error cargando productos.";
     });
 });
-
 
 function mostrarProductos(lista) {
   const contenedor = document.getElementById("lista-productos");
@@ -46,10 +45,22 @@ function mostrarProductos(lista) {
     return;
   }
 
-  lista.forEach(prod => {
+  lista.forEach((prod) => {
+    let imagenes = [];
 
-    const imagenes = JSON.parse(prod.imagenes);
-    const imagenPrincipal = imagenes[0];
+    if (prod.imagenes) {
+      try {
+        imagenes = JSON.parse(prod.imagenes);
+      } catch {
+        imagenes = [];
+      }
+    }
+
+    if (!imagenes.length && prod.imagen) {
+      imagenes = [prod.imagen];
+    }
+
+    const imagenPrincipal = imagenes.length ? imagenes[0] : "placeholder.png"; // o una imagen por defecto
 
     contenedor.innerHTML += `
       <div class="card-producto">
