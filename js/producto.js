@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
          `
   <img src="https://backend-eternum-production.up.railway.app/uploads/${img}" 
        class="thumb" 
-       onclick="document.getElementById('img-grande').src='https://backend-eternum-production.up.railway.app/uploads/${img}'">
+       onclick="document.getElementById('img-principal').src='https://backend-eternum-production.up.railway.app/uploads/${img}'">
 `
       ).join("");
 
