@@ -1,0 +1,125 @@
+/* =====================
+   HEADER BASE
+===================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fdf9f8;
+  border-bottom: 1px solid #e6d8d2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  z-index: 1000;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 48px;
+}
+
+/* =====================
+   MENU
+===================== */
+.menu {
+  list-style: none;
+  display: none; /* oculto en mobile */
+  flex-direction: column;
+  gap: 22px;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 64px);
+  background: #fdf9f8;
+  padding-top: 30px;
+  align-items: center;
+}
+
+.menu.open {
+  display: flex;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #7a5d5a;
+  font-size: 18px;
+}
+
+/* =====================
+   DROPDOWN
+===================== */
+.dropdown {
+  position: relative;
+}
+
+.submenu {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dropdown.open .submenu {
+  display: flex;
+}
+
+.sub-drop-btn {
+  font-weight: bold;
+}
+
+/* =====================
+   CARRITO
+===================== */
+.cart-icon {
+  position: relative;
+  font-size: 22px;
+  color: #7a5d5a;
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #a88976;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* =====================
+   DESKTOP
+===================== */
+@media (min-width: 768px) {
+  .menu {
+    position: static;
+    display: flex !important;
+    flex-direction: row;
+    height: auto;
+    background: none;
+    padding: 0;
+  }
+
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    padding: 14px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    min-width: 200px;
+  }
+
+  .menu a {
+    font-size: 16px;
+  }
+}
