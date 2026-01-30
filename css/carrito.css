@@ -124,6 +124,8 @@ body {
   }
 
   .carrito-box {
+    width: 100%;
+    max-width: 100%;
     padding: 15px;
     border-radius: 12px;
   }
