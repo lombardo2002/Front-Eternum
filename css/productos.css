@@ -1,9 +1,25 @@
+/* MOBILE FIRST */
 .productos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 25px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas en celular */
+  gap: 16px;
+  padding: 12px;
 }
+
+/* Tablet */
+@media (min-width: 768px) {
+  .productos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .productos-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 
 .card-producto {
     background: white;
@@ -47,4 +63,19 @@ button {
 
 button:hover {
     background: #5a423f;
+}
+
+button, .btn {
+  background: #a88976;
+  color: white;
+  border-radius: 30px;
+  padding: 12px 22px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:hover, .btn:hover {
+  opacity: .85;
 }

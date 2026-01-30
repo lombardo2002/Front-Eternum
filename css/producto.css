@@ -77,13 +77,51 @@
 @media (max-width: 768px) {
   .producto-layout {
     flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .galeria {
+    max-width: 100%;
+  }
+
+  .img-grande {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .thumbs {
+    justify-content: center;
+    overflow-x: auto;
   }
 
   .info {
+    max-width: 100%;
     text-align: center;
+    padding: 0 10px;
   }
 
   .btn {
     width: 100%;
+    border-radius: 30px;
+    padding: 14px;
   }
 }
+
+button, .btn {
+  background: #a88976;
+  color: white;
+  border-radius: 30px;
+  padding: 12px 22px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:hover, .btn:hover {
+  opacity: .85;
+}
+

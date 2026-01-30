@@ -192,3 +192,22 @@ body{
     align-items: center;
   }
 }
+
+h1, h2 {
+  text-align: center;
+}
+
+button, .btn {
+  background: #a88976;
+  color: white;
+  border-radius: 30px;
+  padding: 12px 22px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+button:hover, .btn:hover {
+  opacity: .85;
+}
