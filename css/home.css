@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-top: 90px; /* espacio para el header fixed */
+  font-family: Arial, sans-serif;
+  background: #fdf9f8;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ================= HERO ================= */
+.hero {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+.hero .logo {
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #7a5d5a;
+  margin: 0;
+}
+
+.frase {
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 10px;
+}
+
+/* ================= CARRUSEL ================= */
+.carousel {
+  position: relative;
+  max-width: 1200px;
+  height: 380px;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.carousel-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+.carousel-item.active {
+  opacity: 1;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,.6);
+  border: none;
+  padding: 10px 14px;
+  font-size: 1.4rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.carousel-btn.prev { left: 15px; }
+.carousel-btn.next { right: 15px; }
+
+/* ================= DESTACADOS ================= */
+.destacados {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.destacados h2 {
+  color: #7a5d5a;
+  margin-bottom: 20px;
+}
+
+.productos-destacados {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Cards */
+.producto {
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.08);
+  transition: transform .2s ease;
+}
+
+.producto:hover {
+  transform: translateY(-4px);
+}
+
+.producto img {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.producto h3 {
+  font-size: 15px;
+  color: #5a4338;
+  margin: 8px 0 4px;
+}
+
+.producto p {
+  color: #7a5f52;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (min-width: 768px) {
+  .productos-destacados {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+    margin: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .productos-destacados {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1100px;
+  }
+}
