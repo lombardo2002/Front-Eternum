@@ -1,5 +1,5 @@
-document.addEventListener("headerCargado", () => {
-  // ------ Menú productos ------
+
+document.addEventListener("DOMContentLoaded", () => {
   const productoDropdown = document.getElementById("productosDropdown");
   const productosBtn = productoDropdown.querySelector(".drop-btn");
 
@@ -24,10 +24,7 @@ document.addEventListener("headerCargado", () => {
         .forEach((i) => i.classList.remove("open"));
     }
   });
-
-  // ------ Usuario ------
-  const userArea = document.getElementById("user-area");
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
+});
 
  /* if (usuario) {
     userArea.innerHTML = `
@@ -42,4 +39,4 @@ document.addEventListener("headerCargado", () => {
   } else {
     userArea.innerHTML = `<a href="login.html">Iniciar sesión</a>`;
   }*/
-});
+
