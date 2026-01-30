@@ -1,0 +1,89 @@
+/* ===========================
+   GRID DE PRODUCTOS
+=========================== */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 20px 10px;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .productos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .productos-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ===========================
+   CARD PRODUCTO
+=========================== */
+.card-producto {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: .25s;
+}
+
+.card-producto:hover {
+  transform: translateY(-4px);
+}
+
+.card-producto img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.card-producto h3 {
+  font-size: 15px;
+  color: #5a4338;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.card-producto .desc {
+  font-size: 13px;
+  color: #777;
+  margin: 4px 0 8px;
+}
+
+.precio {
+  font-weight: bold;
+  font-size: 17px;
+  color: #7a5d5a;
+  margin-bottom: 8px;
+}
+
+/* ===========================
+   BOTÓN
+=========================== */
+.card-producto button {
+  margin-top: auto;
+  background: #a88976;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.card-producto button:hover {
+  opacity: .85;
+}
