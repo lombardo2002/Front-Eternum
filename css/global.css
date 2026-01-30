@@ -1,0 +1,56 @@
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f1ee;
+}
+
+/* ===== LAYOUT ===== */
+.container {
+  width: 100%;
+  padding: 16px;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* ===== TITULOS ===== */
+h1, h2, h3 {
+  color: #5a4338;
+  text-align: center;
+}
+
+/* ===== BOTONES UNIFICADOS ===== */
+.btn {
+  background: #a88976;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 22px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn:hover {
+  opacity: .85;
+}
+
+/* ===== IMÁGENES ===== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

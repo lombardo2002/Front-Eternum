@@ -12,13 +12,8 @@ body {
 }
 
 /* Caja elegante */
-.carrito-box {
-    max-width: 850px;
-    margin: auto;
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0px 3px 12px rgba(0,0,0,0.1);
+.carrito-box{
+    width: 100%;
 }
 
 /* Cada producto */
