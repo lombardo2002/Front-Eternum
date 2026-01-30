@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login | Eternum</title>
+  </head>
+  <body>
+    <h2>Iniciar sesión</h2>
+
+    <div class="social-login">
+      <button class="google-btn">
+        <i class="fa-brands fa-google"></i> Iniciar sesión con Google
+      </button>
+
+    </div>
+
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required />
+
+      <br /><br />
+
+      <input type="password" id="password" placeholder="Contraseña" required />
+
+      <br /><br />
+
+      <button type="submit">Ingresar</button>
+    </form>
+
+    <p>¿No tenés cuenta? <a href="register.html">Registrate</a></p>
+
+    <p id="login-msg"></p>
+    <p class="forgot">
+      <a href="#" id="forgot-password">¿Olvidaste tu contraseña?</a>
+    </p>
+
+    <script src="js/login.js"></script>
+  </body>
+</html>

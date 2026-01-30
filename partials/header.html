@@ -1,0 +1,106 @@
+<nav class="header">
+  <!-- IZQUIERDA: LOGO -->
+  <div class="header-left">
+    <a href="index.html" class="logo">
+      <img
+        src="/frontend/public/img/logos/Captura de pantalla (43).png"
+        alt="Eternum"
+      />
+    </a>
+  </div>
+
+  <!-- CENTRO: MENU -->
+  <ul class="menu">
+    <!-- ICONO HOME -->
+    <li>
+      <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+
+    <!-- PRODUCTOS -->
+    <li class="dropdown" id="productosDropdown">
+      <a href="#" class="drop-btn">
+        Productos <i class="fa-solid fa-chevron-down"></i>
+      </a>
+
+      <!-- MEGA MENÚ -->
+      <ul class="submenu">
+        <!-- ORO -->
+        <li class="sub-item">
+          <a href="#" class="sub-drop-btn">Oro</a>
+          <ul class="sub-submenu">
+            <li>
+              <a href="productos.html?material=oro&tipo=pulseras">Pulseras</a>
+            </li>
+            <li>
+              <a href="productos.html?material=oro&tipo=cadenas">Cadenas</a>
+            </li>
+            <li><a href="productos.html?material=oro&tipo=aros">Aros</a></li>
+            <li>
+              <a href="productos.html?material=oro&tipo=anillos">Anillos</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- PLATA -->
+        <li class="sub-item">
+          <a href="#" class="sub-drop-btn">Plata</a>
+          <ul class="sub-submenu">
+            <li>
+              <a href="productos.html?material=plata&tipo=pulseras">Pulseras</a>
+            </li>
+            <li>
+              <a href="productos.html?material=plata&tipo=cadenas">Cadenas</a>
+            </li>
+            <li><a href="productos.html?material=plata&tipo=aros">Aros</a></li>
+            <li>
+              <a href="productos.html?material=plata&tipo=anillos">Anillos</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- ACERO -->
+        <li class="sub-item">
+          <a href="#" class="sub-drop-btn">Acero Quirúrgico</a>
+          <ul class="sub-submenu">
+            <li>
+              <a href="productos.html?material=acero_quirurgico&tipo=pulseras"
+                >Pulseras</a
+              >
+            </li>
+            <li>
+              <a href="productos.html?material=acero_quirurgico&tipo=cadenas"
+                >Cadenas</a
+              >
+            </li>
+            <li>
+              <a href="productos.html?material=acero_quirurgico&tipo=aros"
+                >Aros</a
+              >
+            </li>
+            <li>
+              <a href="productos.html?material=acero_quirurgico&tipo=anillos"
+                >Anillos</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <li class="ver-todo"><a href="productos.html">Ver todo</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- DERECHA: CARRITO -->
+  <div class="header-right">
+    <a href="carrito.html" class="cart-icon">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span id="cart-count">0</span>
+    </a>
+  </div>
+
+  <div id="user-area">
+    <a href="login.html" id="login-link">Iniciar Sesión</a>
+  </div>
+</nav>

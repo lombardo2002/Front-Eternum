@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/checkout.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <title>Checkout | Eternum</title>
+  </head>
+
+  <body>
+    <div id="header"></div>
+
+    <main class="checkout-box">
+      <h1>Finalizar compra ✨</h1>
+
+      <form id="form-checkout">
+        <h3>Tus datos</h3>
+        <input name="nombre" placeholder="Nombre completo" required />
+        <input name="telefono" placeholder="WhatsApp / Teléfono" required />
+
+        <h3>Entrega</h3>
+        <label>
+          <input
+            type="radio"
+            name="entrega"
+            value="Retiro en persona"
+            checked
+          />
+          Retiro en persona
+        </label>
+        <label>
+          <input type="radio" name="entrega" value="Envío" />
+          Envío
+        </label>
+
+        <div id="direccion-box" class="hidden">
+          <input name="direccion" placeholder="Dirección completa" />
+          <input name="ciudad" placeholder="Ciudad" />
+        </div>
+
+        <h3>Pago</h3>
+        <label>
+          <input type="radio" name="pago" value="Transferencia" required />
+          Transferencia
+        </label>
+        <label>
+          <input type="radio" name="pago" value="Efectivo" />
+          Efectivo
+        </label>
+
+        <textarea
+          name="nota"
+          placeholder="Nota para el pedido (opcional)"
+        ></textarea>
+
+        <button type="submit" class="btn-confirmar">Confirmar pedido</button>
+      </form>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="js/checkout.js"></script>
+    <script src="js/include.js"></script>
+    <script src="js/header.js"></script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+/* HEADER */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: #fdf9f8;
+  border-bottom: 1px solid #e6d8d2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* MENU PRINCIPAL */
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 35px;
+  align-items: center;
+}
+
+/* ============================
+   MENÚ PRINCIPAL
+============================ */
+.dropdown {
+  position: relative;
+}
+
+/* -------- SUBMENÚ PRINCIPAL (Oro, Plata, Acero) -------- */
+.submenu {
+  display: none;
+  position: absolute;  
+  top: 100%;            
+  left: 0;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  min-width: 200px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  z-index: 9999;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Mostrar menú cuando se abre por JS */
+.dropdown.open .submenu {
+  display: flex;
+}
+
+/* ============================
+   SUBMENÚ INTERNO (Pulseras, Cadenas…)
+============================ */
+.sub-item {
+  position: relative;
+}
+
+.sub-drop-btn {
+  cursor: pointer;
+  font-weight: bold;
+  color: #7a5d5a;
+  text-decoration: none;
+  display: block;
+}
+
+/* Submenú interno (vertical y dentro del panel) */
+.sub-submenu {
+  display: none;
+  flex-direction: column;
+  padding-left: 15px;
+  gap: 8px;
+}
+
+.sub-item.open .sub-submenu {
+  display: flex;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.cart-icon {
+  position: relative;
+}
+
+#cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #a88976;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+}

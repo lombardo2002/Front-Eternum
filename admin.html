@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Admin - Productos y Órdenes</title>
+<link rel="stylesheet" href="./css/admin.css">
+</head>
+<body>
+
+<h1>Panel Admin</h1>
+
+<h2>Órdenes</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th><th>Usuario</th><th>Total</th><th>Estado</th><th>Fecha</th>
+    </tr>
+  </thead>
+  <tbody id="tabla-ordenes"></tbody>
+</table>
+
+<h2>Productos</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th><th>Nombre</th> <th>categoria</th> <th>subcategoria</th>
+      <th>Precio</th><th>Stock</th><th>Descripción</th><th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody id="tabla-productos"></tbody>
+</table>
+
+<h3>Agregar Producto</h3>
+<form id="form-agregar">
+  <input type="text" name="nombre" placeholder="Nombre" required>
+      <select name="material" required>
+        <option value="">Material</option>
+        <option value="oro">Oro</option>
+        <option value="plata">Plata</option>
+        <option value="acero">Acero</option>
+      </select>
+      <select name="tipo" required>
+        <option value="">Tipo</option>
+        <option value="anillos">Anillos</option>
+        <option value="cadenas">Cadenas</option>
+        <option value="pulseras">Pulseras</option>
+        <option value="aros">Aros</option>
+        <option value="piercing">Piercing</option>
+        <option value="tobilleras">Tobilleras</option>
+      </select>
+  <input type="number" name="precio" placeholder="Precio" required>
+  <input type="number" name="stock" placeholder="Stock" required>
+  <input type="text" name="descripcion" placeholder="Descripcion" required>
+  <input type="file" name="imagen" accept="image/*" required multiple>
+
+  <label>
+    <input type="checkbox" name="destacado" value="1"> Producto destacado
+  </label>
+  
+  <button type="submit">Publicar producto</button>
+</form>
+
+<script src="./js/admin.js"></script>
+</body>
+</html>

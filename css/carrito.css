@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f1ee;
+    margin: 0;
+    padding: 20px;
+}
+
+.titulo {
+    text-align: center;
+    color: #6b5244;
+    margin-bottom: 20px;
+}
+
+/* Caja elegante */
+.carrito-box {
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0px 3px 12px rgba(0,0,0,0.1);
+}
+
+/* Cada producto */
+.carrito-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.img-item {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.info {
+    flex: 1;
+}
+
+.info h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #5a4338;
+}
+
+.precio {
+    margin-top: 5px;
+    font-weight: bold;
+    color: #7a5f52;
+}
+
+.cantidad-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.btn-cantidad {
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #c8b3a6;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.subtotal {
+    color: #6b5244;
+    font-weight: bold;
+}
+
+/* Total */
+.total {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 22px;
+    color: #6b5244;
+}
+
+/* Botones finales */
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.vaciar {
+    background: #9c6c6c;
+}
+
+.finalizar {
+    background: #a88976;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
