@@ -31,3 +31,33 @@ button:hover,
   margin-top: 15px;
   width: 100%;
 }
+#header, #footer {
+  width: 100%;
+  padding: 15px 10px;
+  box-sizing: border-box;
+}
+
+/* Si tu header tiene elementos dentro (logo, menú), hacerlos flexibles */
+#header .container, #footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Textos y botones más grandes en desktop y más pequeños en móvil */
+#header, #footer {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  #header, #footer {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #header, #footer {
+    font-size: 18px;
+  }
+}

@@ -12,6 +12,7 @@
 @media (min-width: 768px) {
   .productos-grid {
     grid-template-columns: repeat(3, 1fr);
+    padding: 25px 20px;
   }
 }
 
