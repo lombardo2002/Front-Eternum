@@ -3,13 +3,13 @@
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
-  padding-bottom: 15px;
+  padding: 15px 0;
   border-bottom: 1px solid #ddd;
 }
 
 .img-item {
-  width: 180px;      /* más grande */
-  height: 180px;     /* más grande */
+  width: 180px;
+  height: 180px;
   object-fit: cover;
   border-radius: 12px;
   flex-shrink: 0;
@@ -18,7 +18,7 @@
 .info {
   flex: 1;
   display: flex;
-  justify-content: space-between; /* título a la izquierda, precio a la derecha */
+  justify-content: space-between; /* nombre a la izquierda, precio a la derecha */
   align-items: center;
 }
 
@@ -32,15 +32,6 @@
   font-size: 20px;
   font-weight: bold;
   color: #7a5f52;
-}
-
-/* cantidad y subtotal abajo */
-.cantidad-box,
-.subtotal {
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-  margin-top: 10px;
 }
 
 /* responsive */
@@ -62,16 +53,13 @@
     align-items: center;
   }
 
-  .info h3, .info .precio {
+  .info h3,
+  .info .precio {
     display: block;
     text-align: center;
   }
-
-  .cantidad-box,
-  .subtotal {
-    justify-content: center;
-  }
 }
+
 
 @media (max-width: 768px) {
   .carrito-box {
