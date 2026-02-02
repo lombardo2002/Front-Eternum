@@ -48,34 +48,67 @@ document.addEventListener("DOMContentLoaded", async () => {
     totalTexto.textContent = "TOTAL: $" + total;
   }
 
-  function renderCarrito() {
-    contenedor.innerHTML = "";
-    if (carrito.length === 0) {
-      contenedor.innerHTML = "<p>El carrito está vacío.</p>";
-      totalTexto.textContent = "";
-      return;
-    }
+function renderCarrito() {
+  const contenedor = document.getElementById("carrito-container");
+  contenedor.innerHTML = "";
 
-    carrito.forEach(itemCarrito => {
-      const producto = productos.find(p => Number(p.id) === Number(itemCarrito.id));
-      if (!producto) return;
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-      const div = document.createElement("div");
-      div.classList.add("carrito-item");
-
-      // Contenido HTML de cada producto
-      div.innerHTML = `
-        <img src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}" class="img-item" alt="${producto.nombre}">
-        <div class="info">
-          <h3>${producto.nombre}</h3>
-          <p class="precio">$${producto.precio}</p>
-      `;
-
-      contenedor.appendChild(div);
-    });
-
-    actualizarTotal();
+  if (carrito.length === 0) {
+    contenedor.innerHTML = "<p>El carrito está vacío.</p>";
+    document.getElementById("total").textContent = "";
+    return;
   }
+
+  let productos = []; // traer desde el backend
+  fetch("https://backend-eternum-production.up.railway.app/api/productos")
+    .then(res => res.json())
+    .then(json => {
+      productos = json.data;
+
+      let total = 0;
+
+      carrito.forEach(itemCarrito => {
+        const producto = productos.find(p => Number(p.id) === Number(itemCarrito.id));
+        if (!producto) return;
+
+        total += producto.precio;
+
+        const div = document.createElement("div");
+        div.classList.add("carrito-item");
+        div.dataset.id = producto.id;
+
+        div.innerHTML = `
+          <img src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}" class="img-item" alt="${producto.nombre}">
+          <div class="info">
+            <div>
+              <h3>${producto.nombre}</h3>
+              <p class="precio">$${producto.precio}</p>
+            </div>
+            <button class="btn eliminar">🗑️</button>
+          </div>
+        `;
+
+        contenedor.appendChild(div);
+      });
+
+      document.getElementById("total").textContent = "TOTAL: $" + total;
+
+      // eventos eliminar
+      document.querySelectorAll(".btn.eliminar").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const itemDiv = e.target.closest(".carrito-item");
+          const id = Number(itemDiv.dataset.id);
+          let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+          carrito = carrito.filter(p => Number(p.id) !== id);
+          localStorage.setItem("carrito", JSON.stringify(carrito));
+          renderCarrito();
+          actualizarContadorCarrito();
+        });
+      });
+    });
+}
+
 
   /*/ Eventos para sumar/restar
   contenedor.addEventListener("click", (e) => {
