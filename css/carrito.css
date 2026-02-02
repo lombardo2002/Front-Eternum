@@ -1,6 +1,7 @@
 .carrito-item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
   margin-bottom: 20px;
   padding: 15px 0;
@@ -15,7 +16,6 @@
   flex-shrink: 0;
 }
 
-/* Contenedor derecho con título, precio y basura */
 .info {
   display: flex;
   align-items: center;
@@ -69,6 +69,7 @@
   .info {
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
   .texto {
