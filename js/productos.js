@@ -47,41 +47,30 @@ function mostrarProductos(lista) {
 
   lista.forEach((prod) => {
     let imagenes = [];
-
     if (prod.imagenes) {
-      try {
-        imagenes = JSON.parse(prod.imagenes);
-      } catch {
-        imagenes = [];
-      }
+      try { imagenes = JSON.parse(prod.imagenes); } catch {}
     }
+    if (!imagenes.length && prod.imagen) imagenes = [prod.imagen];
 
-    if (!imagenes.length && prod.imagen) {
-      imagenes = [prod.imagen];
-    }
+    const imagenPrincipal = imagenes.length ? imagenes[0] : "placeholder.png";
 
-    const imagenPrincipal = imagenes.length ? imagenes[0] : "placeholder.png"; // o una imagen por defecto
+    // Crear tarjeta como un div
+    const card = document.createElement("div");
+    card.classList.add("card-producto");
+    card.innerHTML = `
+      <img src="https://backend-eternum-production.up.railway.app/uploads/${imagenPrincipal}" 
+           alt="${prod.nombre}"
+           onclick="location.href='producto.html?id=${prod.id}'">
 
-    contenedor.innerHTML += `
-      <div class="card-producto">
-        <img src="https://backend-eternum-production.up.railway.app/uploads/${imagenPrincipal}" 
-             alt="${prod.nombre}"
-             onclick="location.href='producto.html?id=${prod.id}'">
+      <h3 onclick="location.href='producto.html?id=${prod.id}'">${prod.nombre}</h3>
 
-        <h3 onclick="location.href='producto.html?id=${prod.id}'">
-          ${prod.nombre}
-        </h3>
+      <p class="desc">${prod.descripcion || ""}</p>
+      <p class="precio">$${prod.precio}</p>
 
-        <p class="desc">${prod.descripcion}</p>
-        <p class="precio">$${prod.precio}</p>
-
-        <button onclick="agregarAlCarrito(${prod.id})">Agregar al carrito</button>
-      </div>
+      <button onclick="agregarAlCarrito(${prod.id})">Agregar al carrito</button>
     `;
+
+    contenedor.appendChild(card);
   });
-
-  contenedor.append(card);
-
-  const btn = card.querySelector(".btn-agrgar");
-  btn.addEventListener("click", () => agregarAlCarrito(prod.id));
 }
+
