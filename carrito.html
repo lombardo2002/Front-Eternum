@@ -1,61 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Carrito</title>
+<head>
+  <meta charset="UTF-8" />
+  <title>Carrito</title>
 
-    <!-- ESTILOS -->
-    <link rel="stylesheet" href="css/global.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/carrito.css" />
-    <!-- ICONOS -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-  </head>
+  <!-- Para que sea responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body>
-    <div id="header"></div>
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/carrito.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
 
-    <main class="container carrito-box">
-      <h1 class="titulo">Carrito de compras</h1>
+  <!-- HEADER -->
+  <div id="header"></div>
 
-      <div id="carrito-container"></div>
-      <h2 id="total" class="total"></h2>
+  <!-- MAIN -->
+  <main class="container carrito-box">
+    <h1 class="titulo">Carrito de compras</h1>
 
-      <div class="carrito-item">
-        <img
-          src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}"
-          class="img-item"
-        />
+    <!-- Aquí se van a renderizar los productos del carrito -->
+    <div id="carrito-container"></div>
 
-        <div class="info">
-          <h3>${producto.nombre}</h3>
-          <p class="precio">$${producto.precio}</p>
+    <!-- Total -->
+    <h2 id="total" class="total"></h2>
 
-          <div class="cantidad-box">
-            <span>Cantidad: 1</span>
-          </div>
+    <!-- Botones -->
+    <div class="botones">
+      <button id="vaciar-carrito" class="btn vaciar">Vaciar Carrito</button>
+      <button id="finalizar" class="btn finalizar">Finalizar Compra</button>
+    </div>
+  </main>
 
-          <p class="subtotal">
-            Subtotal: $${producto.precio * itemCarrito.cantidad}
-          </p>
-        </div>
-      </div>
+  <!-- FOOTER -->
+  <div id="footer"></div>
 
-      <div class="botones">
-        <button id="vaciar-carrito" class="btn vaciar">Vaciar Carrito</button>
-        <button id="finalizar" class="btn finalizar">Finalizar Compra</button>
-      </div>
-    </main>
+  <!-- Scripts -->
+  <script src="js/include.js"></script>
+  <script src="js/header.js"></script>
+  <script src="js/carrito.js"></script>
 
-    <!-- FOOTER AUTOMÁTICO -->
-    <div id="footer"></div>
-
-    <!-- SCRIPTS -->
-    <script src="js/include.js"></script>
-    <script src="js/header.js"></script>
-    <script src="js/carrito.js"></script>
-  </body>
+</body>
 </html>
