@@ -1,200 +1,42 @@
-/* ===============================
-   BODY Y CONTENEDORES
-================================ */
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f1ee;
-    margin: 0;
-    padding: 0; /* Quitamos padding para que la caja ocupe todo */
-}
-
-/* ===============================
-   TITULO
-================================ */
-.titulo {
-    text-align: center;
-    color: #6b5244;
-    margin: 20px 0;
-}
-
-/* ===============================
-   CAJA PRINCIPAL DEL CARRITO
-================================ */
-.carrito-box {
-    width: 95%; /* Siempre ocupa casi todo el ancho */
-    max-width: 900px; /* Limita el tamaño en pantallas grandes */
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0px 3px 12px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* ===============================
-   CADA ITEM DEL CARRITO
-================================ */
 .carrito-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-    flex-wrap: wrap; /* IMPORTANTE: permite que elementos bajen en pantallas pequeñas */
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Imagen del producto */
 .img-item {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 12px;
-    flex-shrink: 0;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
 }
 
-/* Info del producto */
 .info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 200px; /* Evita que se haga demasiado pequeño */
+  flex: 1;
 }
 
-.info h3 {
-    margin: 0;
-    font-size: 20px;
-    color: #5a4338;
-}
-
-.precio {
-    font-weight: bold;
-    color: #7a5f52;
-}
-
-.subtotal {
-    font-weight: bold;
-    color: #6b5244;
-}
-
-/* Cantidad */
-.cantidad-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.btn-cantidad {
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: #c8b3a6;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-/* ===============================
-   TOTAL
-================================ */
-.total {
-    text-align: center;
-    font-size: 22px;
-    color: #6b5244;
-    margin-top: 10px;
-}
-
-/* ===============================
-   BOTONES
-================================ */
-.botones {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 25px;
-}
-
-.btn {
-    padding: 12px 25px;
-    border-radius: 10px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    color: white;
-    transition: 0.2s;
-}
-
-.vaciar {
-    background: #9c6c6c;
-}
-
-.finalizar {
-    background: #a88976;
-}
-
-.btn:hover {
-    opacity: 0.85;
-}
-
-/* ===============================
-   MOBILE FIRST – RESPONSIVE REAL
-================================ */
 @media (max-width: 768px) {
+  .carrito-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
-    .carrito-box {
-        width: 95%;
-        padding: 15px;
-        border-radius: 12px;
-    }
+  .img-item {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+  }
 
-    .carrito-item {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 15px;
-    }
+  .info {
+    width: 100%;
+  }
 
-    .img-item {
-        width: 100%;
-        max-width: 300px;
-        height: auto;
-    }
-
-    .info {
-        width: 100%;
-        align-items: center;
-    }
-
-    .info h3 {
-        font-size: 18px;
-    }
-
-    .precio, .subtotal {
-        font-size: 16px;
-    }
-
-    .cantidad-box {
-        justify-content: center;
-    }
-
-    .botones {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .btn {
-        width: 100%;
-        font-size: 16px;
-        padding: 14px;
-        border-radius: 25px;
-    }
-
-    .total {
-        font-size: 20px;
-    }
+  .cantidad-box {
+    justify-content: center;
+  }
 }

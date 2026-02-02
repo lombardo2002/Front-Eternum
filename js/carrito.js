@@ -28,7 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 1. Traer productos desde el backend
   let productos = [];
   try {
-    const respuesta = await fetch("https://backend-eternum-production.up.railway.app/api/productos");
+    const respuesta = await fetch(
+      "https://backend-eternum-production.up.railway.app/api/productos",
+    );
     const json = await respuesta.json();
     productos = json.data; // viene con { meta, data }
   } catch (error) {
@@ -80,35 +82,28 @@ document.addEventListener("DOMContentLoaded", async () => {
       div.classList.add("carrito-item");
 
       div.innerHTML = `
-                <img src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}" class="img-item">
+  <div class="carrito-item">
+    <img src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}" class="img-item">
 
-                <div class="carrito-item">
-                    <h3>${producto.nombre}</h3>
-                    <p class="precio">$${producto.precio}</p>
+    <div class="info">
+      <h3>${producto.nombre}</h3>
+      <p class="precio">$${producto.precio}</p>
 
-                    <div class="cantidad-box">
-                    <span>Cantidad: 1</span>
-                    </div>
-                    <!-- 
-                    FUTURO:
-                    <div class="cantidad-box">
-                    <button class="btn-cantidad" data-id="${producto.id}" data-op="restar">–</button>
-                    <span>${itemCarrito.cantidad}</span>
-                    <button class="btn-cantidad" data-id="${producto.id}" data-op="sumar">+</button>
-                    </div>
-                    -->
-                    <p class="subtotal">Subtotal: $${
-                      producto.precio * itemCarrito.cantidad
-                    }</p>
-                </div>
-            `;
+      <div class="cantidad-box">
+        <span>Cantidad: 1</span>
+      </div>
+
+      <p class="subtotal">Subtotal: $${producto.precio * itemCarrito.cantidad}</p>
+    </div>
+  </div>
+  `;
 
       contenedor.appendChild(div);
     });
 
     actualizarTotal();
   }
-/*
+  /*
   contenedor.addEventListener("click", (e) => {
     if (!e.target.classList.contains("btn-cantidad")) return;
 
@@ -141,21 +136,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (btnFinalizar) {
     btnFinalizar.addEventListener("click", () => {
       const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-      if (!usuario) {
-        const seguir = confirm(
-          "Podés comprar sin registrarte 😊\n\n" +
-            "Pero si te registrás vas a tener promos, historial de pedidos y beneficios exclusivos 💖\n\n" +
-            "¿Querés continuar sin cuenta?",
-        );
-
-        if (!seguir) {
-          window.location.href = "login.html";
-          return;
-        }
-      }
-
-      window.location.href = "checkout.html";
     });
   }
 
