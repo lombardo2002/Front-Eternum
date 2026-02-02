@@ -81,23 +81,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const div = document.createElement("div");
       div.classList.add("carrito-item");
 
-      div.innerHTML = `
-  <div class="carrito-item">
-    <img src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}" class="img-item">
-
-    <div class="info">
-      <h3>${producto.nombre}</h3>
-      <p class="precio">$${producto.precio}</p>
-
-      <div class="cantidad-box">
-        <span>Cantidad: 1</span>
-      </div>
-
-      <p class="subtotal">Subtotal: $${producto.precio * itemCarrito.cantidad}</p>
-    </div>
-  </div>
-  `;
-
       contenedor.appendChild(div);
     });
 
