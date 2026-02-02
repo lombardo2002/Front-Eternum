@@ -79,4 +79,9 @@ function mostrarProductos(lista) {
       </div>
     `;
   });
+
+  contenedor.append(card);
+
+  const btn = card.querySelector(".btn-agrgar");
+  btn.addEventListener("click", () => agregarAlCarrito(prod.id));
 }
