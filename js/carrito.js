@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       div.innerHTML = `
                 <img src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}" class="img-item">
 
-                <div class="info">
+                <div class="carrito-item">
                     <h3>${producto.nombre}</h3>
                     <p class="precio">$${producto.precio}</p>
 
