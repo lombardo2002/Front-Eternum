@@ -1,70 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Carrito</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Carrito</title>
 
-  <!-- ESTILOS -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/global.css" />
-  <link rel="stylesheet" href="css/header.css" />
-  <link rel="stylesheet" href="css/carrito.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-<body>
+    <!-- ESTILOS -->
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/carrito.css" />
+    <!-- ICONOS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
 
-  <div id="header"></div>
+  <body>
+    <div id="header"></div>
 
-  <main class="container carrito-box">
-    <h1 class="titulo">Carrito de compras</h1>
+    <main class="container carrito-box">
+      <h1 class="titulo">Carrito de compras</h1>
 
-    <!-- ----------------- CONTENIDO FIJO ----------------- -->
-    <div id="carrito-container">
+      <div id="carrito-container"></div>
+      <h2 id="total" class="total"></h2>
+
       <div class="carrito-item">
-        <img src="https://backend-eternum-production.up.railway.app/uploads/producto1.jpg" class="img-item" alt="Producto 1">
+        <img
+          src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}"
+          class="img-item"
+        />
 
         <div class="info">
-          <h3>Producto 1</h3>
-          <p class="precio">$1200</p>
+          <h3>${producto.nombre}</h3>
+          <p class="precio">$${producto.precio}</p>
 
           <div class="cantidad-box">
-            <button class="btn-cantidad">–</button>
-            <span>1</span>
-            <button class="btn-cantidad">+</button>
+            <span>Cantidad: 1</span>
           </div>
 
-          <p class="subtotal">Subtotal: $1200</p>
+          <p class="subtotal">
+            Subtotal: $${producto.precio * itemCarrito.cantidad}
+          </p>
         </div>
       </div>
 
-      <div class="carrito-item">
-        <img src="https://backend-eternum-production.up.railway.app/uploads/producto2.jpg" class="img-item" alt="Producto 2">
-
-        <div class="info">
-          <h3>Producto 2</h3>
-          <p class="precio">$850</p>
-
-          <div class="cantidad-box">
-            <button class="btn-cantidad">–</button>
-            <span>2</span>
-            <button class="btn-cantidad">+</button>
-          </div>
-
-          <p class="subtotal">Subtotal: $1700</p>
-        </div>
+      <div class="botones">
+        <button id="vaciar-carrito" class="btn vaciar">Vaciar Carrito</button>
+        <button id="finalizar" class="btn finalizar">Finalizar Compra</button>
       </div>
-    </div>
-    <!-- ----------------- FIN CONTENIDO FIJO ----------------- -->
+    </main>
 
-    <h2 id="total" class="total">TOTAL: $2900</h2>
+    <!-- FOOTER AUTOMÁTICO -->
+    <div id="footer"></div>
 
-    <div class="botones">
-      <button id="vaciar-carrito" class="btn vaciar">Vaciar Carrito</button>
-      <button id="finalizar" class="btn finalizar">Finalizar Compra</button>
-    </div>
-  </main>
-
-  <div id="footer"></div>
-
-</body>
+    <!-- SCRIPTS -->
+    <script src="js/include.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/carrito.js"></script>
+  </body>
 </html>
