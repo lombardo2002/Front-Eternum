@@ -30,7 +30,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Traer productos desde backend
   let productos = [];
   try {
-    const res = await fetch("https://backend-eternum-production.up.railway.app/api/productos");
+    const res = await fetch(
+      "https://backend-eternum-production.up.railway.app/api/productos",
+    );
     const json = await res.json();
     productos = json.data;
   } catch (e) {
@@ -61,8 +63,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let total = 0;
 
-    carrito.forEach(itemCarrito => {
-      const producto = productos.find(p => Number(p.id) === Number(itemCarrito.id));
+    carrito.forEach((itemCarrito) => {
+      const producto = productos.find(
+        (p) => Number(p.id) === Number(itemCarrito.id),
+      );
       if (!producto) return;
 
       total += producto.precio * itemCarrito.cantidad;
@@ -88,15 +92,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     totalTexto.textContent = "TOTAL: $" + total;
 
     if (btnVaciar) btnVaciar.style.display = "inline-block";
-    if (btnFinalizar) btnFinalizar.style.display = "inline-block";
+    if (btnFinalizar) {
+      if (btnFinalizar) {
+        btnFinalizar.addEventListener("click", () => {
+          // Si el carrito está vacío, aviso
+          const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+          if (!carrito.length) {
+            alert("El carrito está vacío");
+            return;
+          }
+
+          // Redirigir al checkout
+          window.location.href = "checkout.html";
+        });
+      }
+    }
 
     // Botones eliminar por producto
-    document.querySelectorAll(".btn.eliminar").forEach(btn => {
-      btn.addEventListener("click", e => {
+    document.querySelectorAll(".btn.eliminar").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
         const itemDiv = e.target.closest(".carrito-item");
         const id = Number(itemDiv.dataset.id);
         let carrito = obtenerCarrito();
-        carrito = carrito.filter(p => Number(p.id) !== id);
+        carrito = carrito.filter((p) => Number(p.id) !== id);
         guardarCarrito(carrito);
         renderCarrito();
       });
