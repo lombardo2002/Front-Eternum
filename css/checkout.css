@@ -1,0 +1,86 @@
+/* ================= CHECKOUT ================= */
+#form-checkout {
+  max-width: 500px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 25px 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: 'Arial', sans-serif;
+}
+
+#form-checkout h3 {
+  color: #5a4338;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+#form-checkout input,
+#form-checkout textarea {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+#form-checkout input:focus,
+#form-checkout textarea:focus {
+  border-color: #a88976;
+  box-shadow: 0 0 6px rgba(168,137,118,0.4);
+  outline: none;
+}
+
+#direccion-box.hidden {
+  display: none;
+}
+
+#form-checkout label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#form-checkout input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #a88976; /* color del radio */
+}
+
+/* Botón confirmar pedido */
+.btn-confirmar {
+  background: #a88976;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  margin-top: 10px;
+}
+
+.btn-confirmar:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* Textarea */
+#form-checkout textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #form-checkout {
+    padding: 20px 15px;
+  }
+}
