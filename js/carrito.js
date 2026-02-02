@@ -69,15 +69,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="info">
           <h3>${producto.nombre}</h3>
           <p class="precio">$${producto.precio}</p>
-
-          <div class="cantidad-box">
-            <button class="btn-cantidad" data-id="${producto.id}" data-op="restar">–</button>
-            <span>${itemCarrito.cantidad}</span>
-            <button class="btn-cantidad" data-id="${producto.id}" data-op="sumar">+</button>
-          </div>
-
-          <p class="subtotal">Subtotal: $${producto.precio * itemCarrito.cantidad}</p>
-        </div>
       `;
 
       contenedor.appendChild(div);
