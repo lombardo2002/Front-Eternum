@@ -48,7 +48,9 @@ function mostrarProductos(lista) {
   lista.forEach((prod) => {
     let imagenes = [];
     if (prod.imagenes) {
-      try { imagenes = JSON.parse(prod.imagenes); } catch {}
+      try {
+        imagenes = JSON.parse(prod.imagenes);
+      } catch {}
     }
     if (!imagenes.length && prod.imagen) imagenes = [prod.imagen];
 
@@ -67,10 +69,16 @@ function mostrarProductos(lista) {
       <p class="desc">${prod.descripcion || ""}</p>
       <p class="precio">$${prod.precio}</p>
 
-      <button onclick="agregarAlCarrito(${prod.id})">Agregar al carrito</button>
+      <button class="add-to-cart" data-id=(${prod.id})">Agregar al carrito</button>
     `;
+
+    document.querySelectorAll(".add-to-cart").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = Number(btn.dataset.id);
+        agregarAlCarrito(id);
+      });
+    });
 
     contenedor.appendChild(card);
   });
 }
-
