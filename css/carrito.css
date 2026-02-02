@@ -40,3 +40,14 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 768px) {
+  .carrito-box {
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+  }
+}
