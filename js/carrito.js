@@ -12,7 +12,7 @@ function agregarAlCarrito(idProducto) {
   actualizarContadorCarrito();
 }
 
-window.agregarAlCarrito = agregarAlCarrito;
+  window.agregarAlCarrito = agregarAlCarrito;
 
 
 function actualizarContadorCarrito() {
