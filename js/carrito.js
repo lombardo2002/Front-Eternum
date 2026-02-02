@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     actualizarTotal();
   }
 
-  // Eventos para sumar/restar
+  /*/ Eventos para sumar/restar
   contenedor.addEventListener("click", (e) => {
     if (!e.target.classList.contains("btn-cantidad")) return;
 
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderCarrito();
     actualizarContadorCarrito();
   });
-
+*/
   // Vaciar carrito
   document.getElementById("vaciar-carrito").addEventListener("click", () => {
     localStorage.removeItem("carrito");
@@ -115,15 +115,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Finalizar compra
   document.getElementById("finalizar").addEventListener("click", () => {
     const usuario = JSON.parse(localStorage.getItem("usuario"));
-    if (!usuario) {
-      const seguir = confirm(
-        "Podés comprar sin registrarte 😊\n\n" +
-        "Pero si te registrás vas a tener promos, historial de pedidos y beneficios exclusivos 💖\n\n" +
-        "¿Querés continuar sin cuenta?"
-      );
-      if (!seguir) return;
-    }
-    window.location.href = "checkout.html";
   });
 
   renderCarrito();
