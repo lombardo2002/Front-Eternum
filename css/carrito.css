@@ -1,15 +1,15 @@
 .carrito-item {
   display: flex;
+  align-items: center;
   gap: 20px;
-  align-items: flex-start;
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid #ddd;
 }
 
 .img-item {
-  width: 130px;
-  height: 130px;
+  width: 180px;      /* más grande */
+  height: 180px;     /* más grande */
   object-fit: cover;
   border-radius: 12px;
   flex-shrink: 0;
@@ -17,17 +17,33 @@
 
 .info {
   flex: 1;
+  display: flex;
+  justify-content: space-between; /* título a la izquierda, precio a la derecha */
+  align-items: center;
 }
 
-@media (max-width: 768px) {
-  .container {
-    width: 100%;
-    max-width: 100%;
-    padding: 0 10px;
-  }
+.info h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #5a4338;
 }
 
+.info .precio {
+  font-size: 20px;
+  font-weight: bold;
+  color: #7a5f52;
+}
 
+/* cantidad y subtotal abajo */
+.cantidad-box,
+.subtotal {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* responsive */
 @media (max-width: 768px) {
   .carrito-item {
     flex-direction: column;
@@ -37,15 +53,22 @@
 
   .img-item {
     width: 100%;
-    max-width: 260px;
+    max-width: 300px;
     height: auto;
   }
 
   .info {
-    width: 100%;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .cantidad-box {
+  .info h3, .info .precio {
+    display: block;
+    text-align: center;
+  }
+
+  .cantidad-box,
+  .subtotal {
     justify-content: center;
   }
 }
@@ -53,10 +76,11 @@
 @media (max-width: 768px) {
   .carrito-box {
     justify-content: center;
+    margin: 60px auto 20px auto;
     gap: 8px;
     width: 100%;
-    max-width: 100%;
-    padding: 15px;
+    max-width: 850px;
+    padding: 25px;
     border-radius: 12px;
   }
 }
