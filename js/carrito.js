@@ -10,6 +10,8 @@ function agregarAlCarrito(idProducto) {
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
   actualizarContadorCarrito();
+
+  window.agregarAlCarrito = agregarAlCarrito
 }
 
 function actualizarContadorCarrito() {
