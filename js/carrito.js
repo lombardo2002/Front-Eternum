@@ -12,8 +12,7 @@ function agregarAlCarrito(idProducto) {
   actualizarContadorCarrito();
 }
 
-  window.agregarAlCarrito = agregarAlCarrito;
-
+window.agregarAlCarrito = agregarAlCarrito;
 
 function actualizarContadorCarrito() {
   const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -25,6 +24,8 @@ function actualizarContadorCarrito() {
 document.addEventListener("DOMContentLoaded", async () => {
   const contenedor = document.getElementById("carrito-container");
   const totalTexto = document.getElementById("total");
+  const btnVaciar = document.getElementById("vaciar-carrito");
+  const btnFinalizar = document.getElementById("finalizar");
 
   // Traer productos desde backend
   let productos = [];
@@ -53,6 +54,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (carrito.length === 0) {
       contenedor.innerHTML = "<p>El carrito está vacío.</p>";
       totalTexto.textContent = "";
+      if (btnVaciar) btnVaciar.style.display = "none";
+      if (btnFinalizar) btnFinalizar.style.display = "none";
       return;
     }
 
@@ -84,6 +87,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     totalTexto.textContent = "TOTAL: $" + total;
 
+    if (btnVaciar) btnVaciar.style.display = "inline-block";
+    if (btnFinalizar) btnFinalizar.style.display = "inline-block";
+
     // Botones eliminar por producto
     document.querySelectorAll(".btn.eliminar").forEach(btn => {
       btn.addEventListener("click", e => {
@@ -98,10 +104,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Vaciar carrito
-  document.getElementById("vaciar-carrito").addEventListener("click", () => {
-    localStorage.removeItem("carrito");
-    renderCarrito();
-  });
+  if (btnVaciar) {
+    btnVaciar.addEventListener("click", () => {
+      localStorage.removeItem("carrito");
+      renderCarrito();
+    });
+  }
 
   renderCarrito();
 });
