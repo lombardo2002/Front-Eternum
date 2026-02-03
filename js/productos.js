@@ -36,22 +36,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function agregarAlCarrito(id) {
-  // Tomamos el carrito actual desde localStorage
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+function agregarAlCarrito(idProducto) {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-  // Buscamos si el producto ya está en el carrito
-  const index = carrito.findIndex(p => p.id === id);
-  if (index !== -1) {
-    carrito[index].cantidad += 1; // Si ya está, sumamos 1
-  } else {
-    carrito.push({ id, cantidad: 1 }); // Si no, lo agregamos
+  // Verificamos si el producto ya está
+  const existente = carrito.find((item) => item.id === idProducto);
+
+  if (existente) {
+    alert("⚠️ Este producto ya está en el carrito. Solo hay 1 unidad disponible.");
+    return; // 🚫 No hacemos nada más
   }
 
-  // Guardamos de nuevo en localStorage
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+  // Si no estaba, lo agregamos
+  carrito.push({
+    id: idProducto,
+    cantidad: 1, // siempre 1
+  });
 
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarContadorCarrito();
 }
+
 
 
 function mostrarProductos(lista) {

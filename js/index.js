@@ -1,21 +1,23 @@
 function agregarAlCarrito(idProducto) {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
+  // Verificamos si el producto ya está
   const existente = carrito.find((item) => item.id === idProducto);
 
   if (existente) {
-    existente.cantidad++;
-  } else {
-    carrito.push({
-      id: idProducto,
-      cantidad: 1,
-    });
+    return; // 🚫 No hacemos nada más
   }
 
-  localStorage.setItem("carrito", JSON.stringify(carrito));
+  // Si no estaba, lo agregamos
+  carrito.push({
+    id: idProducto,
+    cantidad: 1, // siempre 1
+  });
 
+  localStorage.setItem("carrito", JSON.stringify(carrito));
   actualizarContadorCarrito();
 }
+
 
 function actualizarContadorCarrito() {
   const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
