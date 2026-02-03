@@ -1,7 +1,9 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const productoDropdown = document.getElementById("productosDropdown");
+  if (!productoDropdown) return; // 👈 clave
+
   const productosBtn = productoDropdown.querySelector(".drop-btn");
+  if (!productosBtn) return;
 
   productosBtn.addEventListener("click", (e) => {
     e.preventDefault();

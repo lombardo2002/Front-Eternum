@@ -1,3 +1,7 @@
+body{
+  padding-top: 10px;
+}
+
 .carrito-item {
   display: flex;
   align-items: center;

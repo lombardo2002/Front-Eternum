@@ -25,6 +25,7 @@ window.agregarAlCarrito = agregarAlCarrito;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const contenedor = document.getElementById("carrito-container");
+  if (!contenedor) return;
   const totalTexto = document.getElementById("total");
   const btnVaciar = document.getElementById("vaciar-carrito");
   const btnFinalizar = document.getElementById("finalizar");
