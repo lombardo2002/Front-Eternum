@@ -32,12 +32,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...(token && { Authorization: "Bearer " + token }),
     },
     body: JSON.stringify({ carrito }),
   });
 
   const result = await res.json();
+  console.log("respuesta back", result);
 
   if (!result.ok) {
     alert("❌ No se pudo guardar la orden");
