@@ -160,3 +160,29 @@ async function borrarOrden(id){
   cargarOrdenes();
 }
 
+async function actualizarEstado(id, btn){
+  const tr = btn.parentElement.parentElement;
+  const select = tr.querySelector("select");
+  const estado = select.value;
+
+  try {
+    const res = await fetch(`https://backend-eternum-production.up.railway.app/api/ordenes/${id}`, {
+      method: "PUT",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ estado })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+      alert(`✅ Orden ${id} actualizada a ${estado}`);
+      cargarOrdenes();
+    } else {
+      alert("❌ Error actualizando estado: " + (data.error || "desconocido"));
+    }
+  } catch (error) {
+    console.error(error);
+    alert("❌ Error de conexión al actualizar la orden");
+  }
+}
+
