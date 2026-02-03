@@ -146,15 +146,19 @@ async function borrarOrden(id){
   cargarOrdenes();
 }
 
-async function actualizarEstado(id, btn){
+async function actualizarEstado(id, btn) {
   const tr = btn.parentElement.parentElement;
   const select = tr.querySelector("select");
   const estado = select.value;
 
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch(`https://backend-eternum-production.up.railway.app/api/ordenes/${id}`, {
       method: "PUT",
-      headers: {"Content-Type":"application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
       body: JSON.stringify({ estado })
     });
 
@@ -162,7 +166,14 @@ async function actualizarEstado(id, btn){
 
     if (data.ok) {
       alert(`✅ Orden ${id} actualizada a ${estado}`);
-      cargarOrdenes();
+
+      // 🔹 Aquí va el if de entregado
+      if (estado === "entregado") {
+        await borrarOrden(id); // llamamos a tu función de borrar orden
+        return; // salimos para no volver a recargar la tabla dos veces
+      }
+
+      cargarOrdenes(); // recargamos la tabla si NO se borró
     } else {
       alert("❌ Error actualizando estado: " + (data.error || "desconocido"));
     }
@@ -171,4 +182,6 @@ async function actualizarEstado(id, btn){
     alert("❌ Error de conexión al actualizar la orden");
   }
 }
+
+ 
 
