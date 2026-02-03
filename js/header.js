@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const productoDropdown = document.getElementById("productosDropdown");
-  if (!productoDropdown) return; // 👈 clave
+  if (!productoDropdown) return; // 👈 si no existe, no sigo
 
   const productosBtn = productoDropdown.querySelector(".drop-btn");
   if (!productosBtn) return;
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 
  /* if (usuario) {
     userArea.innerHTML = `
