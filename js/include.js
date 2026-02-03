@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const headerEl = document.getElementById("header");
   if (headerEl) {
-    fetch("./partials/header.html")
+    fetch("/partials/header.html")
       .then(res => res.text())
       .then(html => {
         headerEl.innerHTML = html;
