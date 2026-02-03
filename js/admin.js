@@ -15,7 +15,7 @@ async function cargarOrdenes() {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${o.id}</td>
-      <td>${o.usuario_nombre || o.id_usuario}</td>
+      <td>${o.cliente_nombre} (${o.cliente_telefono || "_"})</td>
       <td>$${o.total}</td>
       <td>
   <select>
