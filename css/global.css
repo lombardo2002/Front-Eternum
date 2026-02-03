@@ -1,4 +1,8 @@
 /* ================= BOTONES GLOBALES ================= */
+main {
+  padding-top: 90px;
+}
+
 button,
 .btn,
 .btn-confirmar {

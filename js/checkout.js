@@ -63,7 +63,7 @@ ${resumen}
 Nota: ${data.nota || "—"}
 `;
 
-  const telefonoTuyo = "54911XXXXXXXX";
+  const telefonoTuyo = "5491157542606";
   const url = `https://wa.me/${telefonoTuyo}?text=${encodeURIComponent(mensaje)}`;
 
   localStorage.removeItem("carrito");
