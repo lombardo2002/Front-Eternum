@@ -138,20 +138,6 @@ if (!usuario || usuario.rol !== "admin") {
   window.location.href = "login.html";
 }
 
-async function actualizarEstado(id, btn){
-  const tr = btn.parentElement.parentElement;
-  const select = tr.querySelector("select");
-  const estado = select.value;
-
-  await fetch(`https://backend-eternum-production.up.railway.app/api/ordenes/${id}`, {
-    method: "PUT",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({ estado })
-  });
-
-  alert("Estado actualizado");
-  cargarOrdenes();
-}
 
 async function borrarOrden(id){
   if(!confirm("Eliminar orden entregada?")) return;
