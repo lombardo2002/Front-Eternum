@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("login-form");
   if (!form) return;
-  
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -9,11 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value;
 
     try {
-      const res = await fetch("https://backend-eternum-production.up.railway.app/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await fetch(
+        "https://backend-eternum-production.up.railway.app/api/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const data = await res.json();
 
@@ -22,14 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // ✅ Guardar primero
+      // Guardar sesión
       localStorage.setItem("token", data.token);
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
 
-      // 🔁 Redirigir según rol
+      // Solo admin entra al panel
       if (data.usuario.rol === "admin") {
         window.location.href = "admin.html";
       } else {
+        alert("Acceso solo para administradores");
         window.location.href = "index.html";
       }
 
@@ -37,13 +41,5 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error login:", error);
       alert("Error de conexión con el servidor");
     }
-  });
-
-  document.querySelector(".google-btn").addEventListener("click", () => {
-    alert("Login con Google próximamente 😅");
-  });
-
-  document.getElementById("forgot-password").addEventListener("click", () => {
-    alert("Después lo armamos, tranqui 😉");
   });
 });
