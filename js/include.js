@@ -8,9 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(html => {
         headerEl.innerHTML = html;
 
-        // ⚡️ Cuando el header ya está en el DOM
+        // Cuando el header ya está en el DOM
         activarMenu();
-        actualizarContadorCarrito();
+
+        if(typeof window.actualizarContadorCarrito === "function"){
+          window.actualizarContadorCarrito();
+        }
       });
   }
 
@@ -21,13 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(html => {
         footerEl.innerHTML = html;
       });
-  }
-
-  function actualizarContadorCarrito() {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-    const span = document.getElementById("cart-count");
-    if (span) span.textContent = total;
   }
 
   function activarMenu() {
