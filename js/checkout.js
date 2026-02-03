@@ -33,7 +33,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ carrito }),
+    body: JSON.stringify({
+      carrito,
+      nombre: data.nombre,
+      telefono: data.telefono
+    }),
   });
 
   const result = await res.json();
