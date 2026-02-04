@@ -11,6 +11,10 @@ async function cargarOrdenes() {
   const tbody = document.getElementById("tabla-ordenes");
   tbody.innerHTML = "";
 
+  if (o.estado === "pagado"){
+    tr.classList.add("orden-pagada");
+  }
+
   json.data.forEach((o) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
