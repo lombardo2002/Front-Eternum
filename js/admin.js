@@ -8,33 +8,37 @@ async function cargarOrdenes() {
   });
 
   const json = await res.json();
-  console.log("Ordenes:", json)
+  console.log("Ordenes:", json);
+
+  if (!json.ok) {
+    alert("Sesión vencida. Volvé a iniciar sesión.");
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+    return;
+  }
+
   const tbody = document.getElementById("tabla-ordenes");
   tbody.innerHTML = "";
 
   json.data.forEach((o) => {
-    console.log("Orden individual", o);
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${o.id}</td>
-      <td>${o.cliente_nombre} (${o.cliente_telefono || "_"})</td>
+      <td>${o.cliente_nombre || "-"} (${o.cliente_telefono || "-"})</td>
       <td>$${o.total}</td>
       <td>
-  <select onchange="actualizarEstado(${o.id}, this)">
-    <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
-    <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
-    <option value="entregado" ${o.estado === "entregado" ? "selected" : ""}>Entregado</option>
-  </select>
-</td>
-<td>
-  <button onclick="borrarOrden(${o.id})">Eliminar</button>
-</td>
-
+        <select onchange="actualizarEstado(${o.id}, this)">
+          <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
+          <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
+          <option value="entregado" ${o.estado === "entregado" ? "selected" : ""}>Entregado</option>
+        </select>
+      </td>
+      <td>
+        <button onclick="borrarOrden(${o.id})">Eliminar</button>
+      </td>
       <td>${new Date(o.fecha).toLocaleString()}</td>
     `;
-      if (o.estado === "pagado"){
-    tr.classList.add("orden-pagada");
-  }
+
     tbody.appendChild(tr);
   });
 }
