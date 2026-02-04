@@ -11,10 +11,6 @@ async function cargarOrdenes() {
   const tbody = document.getElementById("tabla-ordenes");
   tbody.innerHTML = "";
 
-  if (o.estado === "pagado"){
-    tr.classList.add("orden-pagada");
-  }
-
   json.data.forEach((o) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -34,6 +30,9 @@ async function cargarOrdenes() {
 
       <td>${new Date(o.fecha).toLocaleString()}</td>
     `;
+      if (o.estado === "pagado"){
+    tr.classList.add("orden-pagada");
+  }
     tbody.appendChild(tr);
   });
 }
@@ -47,8 +46,8 @@ async function actualizarEstado(id, select) {
      {
       method: "PUT",
       headers: {
-        "Contene-Type": "application/json",
-        Authorization: "Bearer" + token,
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({ estado }),
      }
