@@ -16,44 +16,47 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const data = Object.fromEntries(new FormData(form).entries());
+    const data = Object.fromEntries(new FormData(form).entries());
 
-  if (!data.nombre || !data.telefono || !data.pago) {
-    alert("Completá los datos obligatorios");
-    return;
-  }
+    if (!data.nombre || !data.telefono || !data.pago) {
+      alert("Completá los datos obligatorios");
+      return;
+    }
 
-  // 👉 Guardar orden en backend
-  const token = localStorage.getItem("token");
+    // 🔁 Asegurar que todos los productos tengan cantidad
+    const carritoNormalizado = carrito.map(p => ({
+      id: p.id,
+      cantidad: p.cantidad || 1
+    }));
 
-  const res = await fetch("https://backend-eternum-production.up.railway.app/api/ordenes/crear", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      carrito,
-      nombre: data.nombre,
-      telefono: data.telefono
-    })
-  });
+    const res = await fetch("https://backend-eternum-production.up.railway.app/api/ordenes/crear", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        carrito: carritoNormalizado,
+        nombre: data.nombre,
+        telefono: data.telefono
+      })
+    });
 
-  const result = await res.json();
-  console.log("respuesta back", result);
+    const result = await res.json();
+    console.log("respuesta back", result);
 
-  if (!result.ok) {
-    alert("❌ No se pudo guardar la orden");
-    return;
-  }
+    if (!result.ok) {
+      alert("❌ No se pudo guardar la orden");
+      return;
+    }
 
-  // 👉 Mensaje WhatsApp
-  let resumen = carrito
-    .map((p) => `• Producto ID ${p.id} x${p.cantidad}`)
-    .join("\n");
+    // 👉 Mensaje WhatsApp
+    let resumen = carritoNormalizado
+      .map(p => `• Producto ID ${p.id} x${p.cantidad}`)
+      .join("\n");
 
-  let mensaje = `Hola! Hice un pedido 🛍️
+    let mensaje = `Hola! Hice un pedido 🛍️
 
 Nombre: ${data.nombre}
 Tel: ${data.telefono}
@@ -67,11 +70,10 @@ ${resumen}
 Nota: ${data.nota || "—"}
 `;
 
-  const telefonoTuyo = "5491157542606";
-  const url = `https://wa.me/${telefonoTuyo}?text=${encodeURIComponent(mensaje)}`;
+    const telefonoTuyo = "5491157542606";
+    const url = `https://wa.me/${telefonoTuyo}?text=${encodeURIComponent(mensaje)}`;
 
-  localStorage.removeItem("carrito");
-  window.location.href = url;
-});
-
+    localStorage.removeItem("carrito");
+    window.location.href = url;
+  });
 });
