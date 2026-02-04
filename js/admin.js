@@ -1,3 +1,5 @@
+console.log("Ordenes:", json);
+
 async function cargarOrdenes() {
   const token = localStorage.getItem("token");
 
@@ -35,6 +37,7 @@ async function cargarOrdenes() {
   }
     tbody.appendChild(tr);
   });
+  console.log(o);
 }
 
 async function actualizarEstado(id, select) {
