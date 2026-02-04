@@ -1,5 +1,3 @@
-console.log("Ordenes:", json);
-
 async function cargarOrdenes() {
   const token = localStorage.getItem("token");
 
@@ -10,10 +8,12 @@ async function cargarOrdenes() {
   });
 
   const json = await res.json();
+  console.log("Ordenes:", json)
   const tbody = document.getElementById("tabla-ordenes");
   tbody.innerHTML = "";
 
   json.data.forEach((o) => {
+    console.log("Orden individual", o);
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${o.id}</td>
@@ -37,7 +37,6 @@ async function cargarOrdenes() {
   }
     tbody.appendChild(tr);
   });
-  console.log(o);
 }
 
 async function actualizarEstado(id, select) {
