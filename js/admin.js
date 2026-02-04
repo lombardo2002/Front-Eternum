@@ -18,14 +18,13 @@ async function cargarOrdenes() {
       <td>${o.cliente_nombre} (${o.cliente_telefono || "_"})</td>
       <td>$${o.total}</td>
       <td>
-  <select>
+  <select onchange="actualizarEstado(${o.id}, this)">
     <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
     <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
     <option value="entregado" ${o.estado === "entregado" ? "selected" : ""}>Entregado</option>
   </select>
 </td>
 <td>
-  <button onclick="actualizarEstado(${o.id}, this)">Guardar</button>
   <button onclick="borrarOrden(${o.id})">Eliminar</button>
 </td>
 
@@ -34,6 +33,39 @@ async function cargarOrdenes() {
     tbody.appendChild(tr);
   });
 }
+
+async function actualizarEstado(id, select) {
+  const estado = select.value;
+  const token = localStorage.getItem("token");
+
+  const res = await fetch(
+     `https://backend-eternum-production.up.railway.app/api/ordenes/${id}`,
+     {
+      method: "PUT",
+      headers: {
+        "Contene-Type": "application/json",
+        Authorization: "Bearer" + token,
+      },
+      body: JSON.stringify({ estado }),
+     }
+  );
+
+  const data = await res.json();
+
+  if (!data.ok) {
+    return;
+  }
+  const tr = select.closest("tr");
+  if (estado === "pagado") {
+    tr.classList.add("orden-pagada");
+  }
+  if(estado === "entregado"){
+    borrarOrden(id);
+  }
+}
+
+window.actualizarEstado = actualizarEstado;
+window.borrarOrden = borrarOrden;
 
 async function cargarProductos() {
   const token = localStorage.getItem("token");
