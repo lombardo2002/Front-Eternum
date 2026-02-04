@@ -1,14 +1,11 @@
 async function cargarOrdenes() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(
-    "https://backend-eternum-production.up.railway.app/api/ordenes",
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+  const res = await fetch("https://backend-eternum-production.up.railway.app/api/ordenes", {
+    headers: {
+      Authorization: "Bearer " + token,
     },
-  );
+  });
 
   const json = await res.json();
   const tbody = document.getElementById("tabla-ordenes");
@@ -41,14 +38,11 @@ async function cargarOrdenes() {
 async function cargarProductos() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(
-    "https://backend-eternum-production.up.railway.app/api/productos",
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
+  const res = await fetch("https://backend-eternum-production.up.railway.app/api/productos", {
+    headers: {
+      Authorization: "Bearer " + token,
     },
-  );
+  });
 
   const json = await res.json();
   const tbody = document.getElementById("tabla-productos");
@@ -84,33 +78,27 @@ async function editarProducto(id, btn) {
     (i) => i.value,
   );
 
-  await fetch(
-    `https://backend-eternum-production.up.railway.app/api/productos/${id}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombre,
-        material,
-        tipo,
-        precio,
-        stock,
-        descripcion,
-      }),
-    },
-  );
+  await fetch(`https://backend-eternum-production.up.railway.app/api/productos/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      nombre,
+      material,
+      tipo,
+      precio,
+      stock,
+      descripcion,
+    }),
+  });
   alert("Producto actualizado");
   cargarProductos();
 }
 
 async function borrarProducto(id) {
   if (!confirm("Borrar producto?")) return;
-  await fetch(
-    `https://backend-eternum-production.up.railway.app/api/productos/${id}`,
-    {
-      method: "DELETE",
-    },
-  );
+  await fetch(`https://backend-eternum-production.up.railway.app/api/productos/${id}`, {
+    method: "DELETE",
+  });
   alert("Producto borrado");
   cargarProductos();
 }
@@ -122,13 +110,10 @@ document
     const form = e.target;
     const data = new FormData(form); // 👈 importante
 
-    const res = await fetch(
-      "https://backend-eternum-production.up.railway.app/api/productos",
-      {
-        method: "POST",
-        body: data, // 👈 sin headers
-      },
-    );
+    const res = await fetch("https://backend-eternum-production.up.railway.app/api/productos", {
+      method: "POST",
+      body: data, // 👈 sin headers
+    });
 
     const json = await res.json();
 
@@ -153,52 +138,14 @@ if (!usuario || usuario.rol !== "admin") {
   window.location.href = "login.html";
 }
 
-async function borrarOrden(id) {
-  if (!confirm("Eliminar orden entregada?")) return;
-  await fetch(
-    `https://backend-eternum-production.up.railway.app/api/ordenes/${id}`,
-    { method: "DELETE" },
-  );
+
+async function borrarOrden(id){
+  if(!confirm("Eliminar orden entregada?")) return;
+  await fetch(`https://backend-eternum-production.up.railway.app/api/ordenes/${id}`, { method:"DELETE" });
   alert("Orden eliminada");
   cargarOrdenes();
 }
 
-async function actualizarEstado(id, btn) {
-  const tr = btn.parentElement.parentElement;
-  const select = tr.querySelector("select");
-  const estado = select.value;
 
-  try {
-    const token = localStorage.getItem("token");
-    const res = await fetch(
-      `https://backend-eternum-production.up.railway.app/api/ordenes/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({ estado }),
-      },
-    );
+ 
 
-    const data = await res.json();
-
-    if (data.ok) {
-      alert(`✅ Orden ${id} actualizada a ${estado}`);
-
-      // 🔹 Aquí va el if de entregado
-      if (estado === "entregado") {
-        await borrarOrden(id); // llamamos a tu función de borrar orden
-        return; // salimos para no volver a recargar la tabla dos veces
-      }
-
-      cargarOrdenes(); // recargamos la tabla si NO se borró
-    } else {
-      alert("❌ Error actualizando estado: " + (data.error || "desconocido"));
-    }
-  } catch (error) {
-    console.error(error);
-    alert("❌ Error de conexión al actualizar la orden");
-  }
-}
