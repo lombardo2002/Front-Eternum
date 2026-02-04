@@ -13,31 +13,27 @@ async function cargarOrdenes() {
 
   json.data.forEach((o) => {
     const tr = document.createElement("tr");
-
-    // 🔹 Agregamos clase según estado
-    if (o.estado === "pagado") tr.classList.add("orden-pagada");
-
     tr.innerHTML = `
       <td>${o.id}</td>
       <td>${o.cliente_nombre} (${o.cliente_telefono || "_"})</td>
       <td>$${o.total}</td>
       <td>
-        <select>
-          <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
-          <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
-          <option value="entregado">Entregado</option>
-        </select>
-      </td>
-      <td>
-        <button onclick="actualizarEstado(${o.id}, this)">Guardar</button>
-        <button onclick="borrarOrden(${o.id})">Eliminar</button>
-      </td>
+  <select>
+    <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
+    <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
+    <option value="entregado" ${o.estado === "entregado" ? "selected" : ""}>Entregado</option>
+  </select>
+</td>
+<td>
+  <button onclick="actualizarEstado(${o.id}, this)">Guardar</button>
+  <button onclick="borrarOrden(${o.id})">Eliminar</button>
+</td>
+
       <td>${new Date(o.fecha).toLocaleString()}</td>
     `;
     tbody.appendChild(tr);
   });
 }
-
 
 async function cargarProductos() {
   const token = localStorage.getItem("token");
