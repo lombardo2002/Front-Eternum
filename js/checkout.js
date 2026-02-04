@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 👉 Guardar orden en backend
   const token = localStorage.getItem("token");
   console.log("📦 ORDEN QUE MANDO:", {
-  productos: carrito,
-  cliente: data.nombre,
+  carrito: carrito,
+  nombre: data.nombre,
   telefono: data.telefono,
 });
 
@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      productos: carrito,
-      cliente: data.nombre,
+      carrito: carrito,
+      nombre: data.nombre,
       telefono: data.telefono,
     }),
   });
