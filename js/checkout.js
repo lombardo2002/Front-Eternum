@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 👉 Mensaje WhatsApp
   let resumen = carrito
-    .map((p) => `• Producto ID ${p.id} x${p.cantidad}`)
+    .map((p) => `• ${p.nombre} ID ${p.id}`)
     .join("\n");
 
   let mensaje = `Hola! Hice un pedido 🛍️
