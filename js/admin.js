@@ -1,57 +1,54 @@
 async function cargarOrdenes() {
   const token = localStorage.getItem("token");
-  console.log("Token:", token);
 
-  const res = await fetch("https://backend-eternum-production.up.railway.app/api/ordenes", {
-    headers: { Authorization: "Bearer " + token },
-  });
-
-  console.log("Respuesta fetch:", res.status);
+  const res = await fetch(
+    "https://backend-eternum-production.up.railway.app/api/ordenes",
+    {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    },
+  );
 
   const json = await res.json();
-  console.log("Data recibida:", json);
-
   const tbody = document.getElementById("tabla-ordenes");
   tbody.innerHTML = "";
 
-  if (!json.ok || !json.data) {
-    tbody.innerHTML = "<tr><td colspan='6'>No se pudieron cargar las órdenes</td></tr>";
-    return;
-  }
-
   json.data.forEach((o) => {
     const tr = document.createElement("tr");
-    if (o.estado === "pagado") tr.classList.add("orden-pagada");
     tr.innerHTML = `
       <td>${o.id}</td>
       <td>${o.cliente_nombre} (${o.cliente_telefono || "_"})</td>
       <td>$${o.total}</td>
       <td>
-        <select>
-          <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
-          <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
-          <option value="entregado">Entregado</option>
-        </select>
-      </td>
-      <td>
-        <button onclick="actualizarEstado(${o.id}, this)">Guardar</button>
-        <button onclick="borrarOrden(${o.id})">Eliminar</button>
-      </td>
+  <select>
+    <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
+    <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
+    <option value="entregado" ${o.estado === "entregado" ? "selected" : ""}>Entregado</option>
+  </select>
+</td>
+<td>
+  <button onclick="actualizarEstado(${o.id}, this)">Guardar</button>
+  <button onclick="borrarOrden(${o.id})">Eliminar</button>
+</td>
+
       <td>${new Date(o.fecha).toLocaleString()}</td>
     `;
     tbody.appendChild(tr);
   });
 }
 
-
 async function cargarProductos() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("https://backend-eternum-production.up.railway.app/api/productos", {
-    headers: {
-      Authorization: "Bearer " + token,
+  const res = await fetch(
+    "https://backend-eternum-production.up.railway.app/api/productos",
+    {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
     },
-  });
+  );
 
   const json = await res.json();
   const tbody = document.getElementById("tabla-productos");
@@ -87,27 +84,33 @@ async function editarProducto(id, btn) {
     (i) => i.value,
   );
 
-  await fetch(`https://backend-eternum-production.up.railway.app/api/productos/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      nombre,
-      material,
-      tipo,
-      precio,
-      stock,
-      descripcion,
-    }),
-  });
+  await fetch(
+    `https://backend-eternum-production.up.railway.app/api/productos/${id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre,
+        material,
+        tipo,
+        precio,
+        stock,
+        descripcion,
+      }),
+    },
+  );
   alert("Producto actualizado");
   cargarProductos();
 }
 
 async function borrarProducto(id) {
   if (!confirm("Borrar producto?")) return;
-  await fetch(`https://backend-eternum-production.up.railway.app/api/productos/${id}`, {
-    method: "DELETE",
-  });
+  await fetch(
+    `https://backend-eternum-production.up.railway.app/api/productos/${id}`,
+    {
+      method: "DELETE",
+    },
+  );
   alert("Producto borrado");
   cargarProductos();
 }
@@ -119,10 +122,13 @@ document
     const form = e.target;
     const data = new FormData(form); // 👈 importante
 
-    const res = await fetch("https://backend-eternum-production.up.railway.app/api/productos", {
-      method: "POST",
-      body: data, // 👈 sin headers
-    });
+    const res = await fetch(
+      "https://backend-eternum-production.up.railway.app/api/productos",
+      {
+        method: "POST",
+        body: data, // 👈 sin headers
+      },
+    );
 
     const json = await res.json();
 
@@ -147,10 +153,12 @@ if (!usuario || usuario.rol !== "admin") {
   window.location.href = "login.html";
 }
 
-
-async function borrarOrden(id){
-  if(!confirm("Eliminar orden entregada?")) return;
-  await fetch(`https://backend-eternum-production.up.railway.app/api/ordenes/${id}`, { method:"DELETE" });
+async function borrarOrden(id) {
+  if (!confirm("Eliminar orden entregada?")) return;
+  await fetch(
+    `https://backend-eternum-production.up.railway.app/api/ordenes/${id}`,
+    { method: "DELETE" },
+  );
   alert("Orden eliminada");
   cargarOrdenes();
 }
@@ -162,14 +170,17 @@ async function actualizarEstado(id, btn) {
 
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`https://backend-eternum-production.up.railway.app/api/ordenes/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
+    const res = await fetch(
+      `https://backend-eternum-production.up.railway.app/api/ordenes/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({ estado }),
       },
-      body: JSON.stringify({ estado })
-    });
+    );
 
     const data = await res.json();
 
@@ -191,6 +202,3 @@ async function actualizarEstado(id, btn) {
     alert("❌ Error de conexión al actualizar la orden");
   }
 }
-
- 
-
