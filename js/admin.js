@@ -1,39 +1,48 @@
 async function cargarOrdenes() {
   const token = localStorage.getItem("token");
+  console.log("Token:", token);
 
   const res = await fetch("https://backend-eternum-production.up.railway.app/api/ordenes", {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
+    headers: { Authorization: "Bearer " + token },
   });
 
+  console.log("Respuesta fetch:", res.status);
+
   const json = await res.json();
+  console.log("Data recibida:", json);
+
   const tbody = document.getElementById("tabla-ordenes");
   tbody.innerHTML = "";
 
+  if (!json.ok || !json.data) {
+    tbody.innerHTML = "<tr><td colspan='6'>No se pudieron cargar las órdenes</td></tr>";
+    return;
+  }
+
   json.data.forEach((o) => {
     const tr = document.createElement("tr");
+    if (o.estado === "pagado") tr.classList.add("orden-pagada");
     tr.innerHTML = `
       <td>${o.id}</td>
       <td>${o.cliente_nombre} (${o.cliente_telefono || "_"})</td>
       <td>$${o.total}</td>
       <td>
-  <select>
-    <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
-    <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
-    <option value="entregado" ${o.estado === "entregado" ? "selected" : ""}>Entregado</option>
-  </select>
-</td>
-<td>
-  <button onclick="actualizarEstado(${o.id}, this)">Guardar</button>
-  <button onclick="borrarOrden(${o.id})">Eliminar</button>
-</td>
-
+        <select>
+          <option value="pendiente" ${o.estado === "pendiente" ? "selected" : ""}>Pendiente</option>
+          <option value="pagado" ${o.estado === "pagado" ? "selected" : ""}>Pagado</option>
+          <option value="entregado">Entregado</option>
+        </select>
+      </td>
+      <td>
+        <button onclick="actualizarEstado(${o.id}, this)">Guardar</button>
+        <button onclick="borrarOrden(${o.id})">Eliminar</button>
+      </td>
       <td>${new Date(o.fecha).toLocaleString()}</td>
     `;
     tbody.appendChild(tr);
   });
 }
+
 
 async function cargarProductos() {
   const token = localStorage.getItem("token");
