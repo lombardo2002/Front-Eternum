@@ -31,7 +31,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   productos: carrito,
   cliente: data.nombre,
   telefono: data.telefono,
-  estado: "pendiente"
 });
 
 
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       productos: carrito,
       cliente: data.nombre,
       telefono: data.telefono,
-      estado: "pendiente"
     }),
   });
 
