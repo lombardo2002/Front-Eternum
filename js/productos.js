@@ -39,15 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
 function agregarAlCarrito(idProducto, nombreProducto) {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-  // Verificamos si el producto ya está
   const existente = carrito.find((item) => item.id === idProducto);
 
   if (existente) {
     alert("⚠️ Este producto ya está en el carrito. Solo hay 1 unidad disponible.");
-    return; // 🚫 No hacemos nada más
+    return;
   }
 
-  // Si no estaba, lo agregamos
   carrito.push({
     id: idProducto,
     nombre: nombreProducto
@@ -56,8 +54,6 @@ function agregarAlCarrito(idProducto, nombreProducto) {
   localStorage.setItem("carrito", JSON.stringify(carrito));
   actualizarContadorCarrito();
 }
-
-
 
 function mostrarProductos(lista) {
   const contenedor = document.getElementById("lista-productos");
@@ -79,6 +75,7 @@ function mostrarProductos(lista) {
 
     const card = document.createElement("div");
     card.classList.add("card-producto");
+
     card.innerHTML = `
       <img src="https://backend-eternum-production.up.railway.app/uploads/${imagenPrincipal}" 
            alt="${prod.nombre}"
@@ -95,14 +92,13 @@ function mostrarProductos(lista) {
     contenedor.appendChild(card);
   });
 
-  // **Agregar listener después de que todos los productos están en el DOM**
-document.querySelectorAll(".add-to-cart").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const id = Number(btn.dataset.id);
-    const nombre = btn.closest(".card-producto").querySelector("h3").textContent;
+  document.querySelectorAll(".add-to-cart").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = Number(btn.dataset.id);
+      const nombre = btn.closest(".card-producto").querySelector("h3").textContent;
 
-    agregarAlCarrito(id, nombre);
+      agregarAlCarrito(id, nombre);
+    });
   });
-});
-
 }
+
