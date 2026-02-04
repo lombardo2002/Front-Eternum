@@ -27,12 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 👉 Guardar orden en backend
   const token = localStorage.getItem("token");
-  console.log("📦 ORDEN QUE MANDO:", {
-  carrito: carrito,
-  nombre: data.nombre,
-  telefono: data.telefono,
-});
-
 
   const res = await fetch("https://backend-eternum-production.up.railway.app/api/ordenes/crear", {
     method: "POST",
@@ -40,10 +34,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      carrito: carrito,
+      carrito,
       nombre: data.nombre,
-      telefono: data.telefono,
-    }),
+      telefono: data.telefono
+    })
   });
 
   const result = await res.json();
@@ -56,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // 👉 Mensaje WhatsApp
   let resumen = carrito
-    .map((p) => `• ${p.nombre} ID ${p.id}`)
+    .map((p) => `• Producto ID ${p.id} x${p.cantidad}`)
     .join("\n");
 
   let mensaje = `Hola! Hice un pedido 🛍️
