@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function agregarAlCarrito(idProducto) {
+function agregarAlCarrito(idProducto, nombreProducto) {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
   // Verificamos si el producto ya está
@@ -50,7 +50,7 @@ function agregarAlCarrito(idProducto) {
   // Si no estaba, lo agregamos
   carrito.push({
     id: idProducto,
-    cantidad: 1, // siempre 1
+    nombre: nombreProducto
   });
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -99,7 +99,7 @@ function mostrarProductos(lista) {
   document.querySelectorAll(".add-to-cart").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.id);
-      agregarAlCarrito(id);
+      agregarAlCarrito(id, nombre);
     });
   });
 }
