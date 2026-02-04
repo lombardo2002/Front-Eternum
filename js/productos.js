@@ -96,13 +96,10 @@ function mostrarProductos(lista) {
   });
 
   // **Agregar listener después de que todos los productos están en el DOM**
-document.querySelectorAll(".add-to-cart").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const id = Number(btn.dataset.id);
-    const nombre = btn.closest(".card-producto").querySelector("h3").textContent;
-
-    agregarAlCarrito(id, nombre);
+  document.querySelectorAll(".add-to-cart").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = Number(btn.dataset.id);
+      agregarAlCarrito(id, nombre);
+    });
   });
-});
-
 }
