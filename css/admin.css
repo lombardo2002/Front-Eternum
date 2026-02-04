@@ -40,3 +40,7 @@ form select {
 h1, h2, h3 {
   margin: 8px 0;
 }
+/* Fila verde para orden pagada */
+.orden-pagada {
+  background-color: #d4edda; /* verde clarito */
+}
