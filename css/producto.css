@@ -1,6 +1,9 @@
 /* ===========================
    LAYOUT
 =========================== */
+body {
+  padding-top: 10px;
+}
 .producto-layout {
   display: flex;
   gap: 60px;
