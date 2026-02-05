@@ -45,7 +45,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       const producto = productos.find(
         (p) => Number(p.id) === Number(itemCarrito.id),
       );
-      if (!producto) return;
+      if (!producto) {
+        console.warn("Producto no encontrado en backend:", itemCarrito);
+        return;
+      }
+
+      const precio = Number(producto.precio);
+      const cantidad = Number(itemCarrito.cantidad);
+
+      if (isNaN(precio) || isNaN(cantidad)) {
+        console.warn("Datos inválidos en carrito:", { producto, itemCarrito });
+        return;
+      }
 
       total += producto.precio * itemCarrito.cantidad;
 
@@ -67,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       contenedor.appendChild(div);
     });
 
-    totalTexto.textContent = "TOTAL: $" + total;
+    totalTexto.textContent = "TOTAL: $" + total.toFixed(2);
 
     if (btnVaciar) btnVaciar.style.display = "inline-block";
     if (btnFinalizar) {
@@ -99,30 +110,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-function actualizarContadorCarrito() {
-  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-  const span = document.getElementById("cart-count");
-  if (span) span.textContent = total;
-}
-
-window.actualizarContadorCarrito = actualizarContadorCarrito;
-
-function agregarAlCarrito(idProducto) {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-  const existente = carrito.find((p) => Number(p.id) === Number(idProducto));
-  if (existente) {
-    existente.cantidad += 1;
-  } else {
-    carrito.push({ id: idProducto, cantidad: 1 });
+  function actualizarContadorCarrito() {
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    const span = document.getElementById("cart-count");
+    if (span) span.textContent = total;
   }
 
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContadorCarrito();
-}
+  window.actualizarContadorCarrito = actualizarContadorCarrito;
 
-window.agregarAlCarrito = agregarAlCarrito;
+  function agregarAlCarrito(idProducto) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    const existente = carrito.find((p) => Number(p.id) === Number(idProducto));
+    if (existente) {
+      existente.cantidad += 1;
+    } else {
+      carrito.push({ id: idProducto, cantidad: 1 });
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    actualizarContadorCarrito();
+  }
+
+  window.agregarAlCarrito = agregarAlCarrito;
 
   // Vaciar carrito
   if (btnVaciar) {
