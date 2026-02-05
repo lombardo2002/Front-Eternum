@@ -1,4 +1,8 @@
 /* ================= CHECKOUT ================= */
+body{
+padding-top: 30px;
+}
+
 #form-checkout {
   max-width: 500px;
   margin: 20px auto;
