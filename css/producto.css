@@ -55,7 +55,22 @@
   flex: 1;
   padding-top: 10px;
   max-width: 420px;
+  background: #fdf9f8;
+  padding: 28px 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.06);
 }
+
+.info h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #a88976;
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
 
 .info h1 {
   font-size: 28px;
@@ -104,6 +119,7 @@
   .img-grande {
     border-radius: 0;
     box-shadow: none;
+    border: 1px solid #eaded7;
   }
 
   .thumbs {
