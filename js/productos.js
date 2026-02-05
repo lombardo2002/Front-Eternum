@@ -50,7 +50,8 @@ function agregarAlCarrito(idProducto, nombreProducto) {
   // Si no estaba, lo agregamos
   carrito.push({
     id: idProducto,
-    nombre: nombreProducto
+    nombre: nombreProducto,
+    cantidad: 1
   });
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
