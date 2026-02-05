@@ -3,15 +3,20 @@
 =========================== */
 .producto-layout {
   display: flex;
-  gap: 50px;
+  gap: 60px;
   margin-top: 40px;
   align-items: flex-start;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 30px;
 }
 
 /* ===========================
    GALERÍA
 =========================== */
 .galeria {
+  flex: 1;
   max-width: 420px;
 }
 
@@ -47,6 +52,8 @@
    INFO
 =========================== */
 .info {
+  flex: 1;
+  padding-top: 10px;
   max-width: 420px;
 }
 
