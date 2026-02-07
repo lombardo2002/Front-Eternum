@@ -182,3 +182,11 @@ fetch("https://backend-eternum-production.up.railway.app/")
   .catch((err) => {
     console.error("Error al conectar con backend:", err);
   });
+
+  async function testSupabase() {
+    const { data, error } = await supabase.from('test').select('*')
+    console.log('DATA:', data)
+    console.log('ERROR:', error)
+  }
+
+  testSupabase();
