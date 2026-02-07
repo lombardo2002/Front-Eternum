@@ -184,7 +184,7 @@ fetch("https://backend-eternum-production.up.railway.app/")
   });
 
   async function testSupabase() {
-    const { data, error } = await supabase.from('test').select('*')
+    const { data, error } = await supabaseClient.from('test').select('*')
     console.log('DATA:', data)
     console.log('ERROR:', error)
   }
