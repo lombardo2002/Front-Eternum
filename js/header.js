@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const productoDropdown = document.getElementById("productosDropdown");
-  if (!productoDropdown) return; // 👈 si no existe, no sigo
+  if (!productoDropdown) return; 
 
   const productosBtn = productoDropdown.querySelector(".drop-btn");
   if (!productosBtn) return;

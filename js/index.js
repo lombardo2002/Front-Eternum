@@ -18,7 +18,6 @@ function agregarAlCarrito(idProducto) {
   actualizarContadorCarrito();
 }
 
-
 function actualizarContadorCarrito() {
   const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
@@ -27,54 +26,53 @@ function actualizarContadorCarrito() {
   if (cartCount) cartCount.textContent = total;
 }
 
-async function agregarAlCarritoBackend(id) {
+async function agregarAlCarritoBackend(idProducto, idUsuario) {
   try {
-    const res = await fetch("https://backend-eternum-production.up.railway.app/api/carrito", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id,
+    const { data, error } = await supabaseClient.from("carrito").insert([
+      {
+        id_usuario: idUsuario,
+        id_producto: idProducto,
         cantidad: 1,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (data.ok) {
-      //      cargarCarrito();
+      },
+    ]);
+    if (error) {
+      console.error("Error al agregar al carrito", error);
+    } else {
+      console.log("Agregado al carrito:", data);
     }
-  } catch (error) {
-    console.error("Error al agregar al carrito:", error);
+  } catch (err) {
+    console.error("Error inesperado:", err);
   }
 }
 
-async function cargarCarrito() {
-  try {
-    const res = await fetch("https://backend-eternum-production.up.railway.app/api/carrito");
-    const data = await res.json();
+async function cargarCarrito(idUsuario) {
+  const { data, error } = await supabaseClient
+    .from("carrito")
+    .select("*")
+    .eq("id_usuario", idUsuario);
 
-    if (data.ok) {
-      const total = data.carrito.reduce((acc, p) => acc + p.cantidad, 0);
-      const cartCount = document.getElementById("cart-count");
-      if (cartCount) cartCount.textContent = total;
-    }
-  } catch (error) {
-    console.error("Error cargando carrito:", error);
+  if (error) {
+    console.error("Error al cargar carrito", error);
+    return;
   }
+  const total = data.reduce((acc, item) => acc + item.cantidad, 0);
+  const cartCount = document.getElementById("cart-count");
+  if (cartCount) cartCount.textContent = total;
 }
+
+const ID_USUARIO_FAKE = 1;
 
 document.addEventListener("DOMContentLoaded", async () => {
   let productos = [];
 
-  try {
-    const resp = await fetch("https://backend-eternum-production.up.railway.app/api/productos");
-    const data = await resp.json();
-    productos = data.data;
-  } catch (error) {
-    console.error("Error al cargar productos:", error);
+  const { data, error } = await supabaseClient.from("productos").select("*");
+
+  if (error) {
+    console.error("Error al cargar productos", error);
+    return;
   }
+
+  productos = data;
 
   const contenedor = document.getElementById("productos-container");
 
@@ -104,6 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!id) return;
 
     agregarAlCarrito(id);
+    agregarAlCarritoBackend(id, ID_USUARIO_FAKE);
   });
 
   /* ---------------------------- CARRUSEL ---------------------------- */
@@ -137,23 +136,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   cargarDestacados();
+  cargarCarrito(ID_USUARIO_FAKE);
 });
 
-cargarCarrito();
-
 async function cargarDestacados() {
-  try {
-    const res = await fetch(
-      "https://backend-eternum-production.up.railway.app/api/productos?destacado=true",
-    );
-    const data = await res.json();
+  const { data, error } = await supabaseClient
+    .from("productos")
+    .select("*")
+    .eq("destacado", true);
 
-    const cont = document.getElementById("destacados-container");
-    cont.innerHTML = data.data
-      .map(
-        (p) => ` 
+  if (error) {
+    console.error("Error cargando destacados", error);
+    return;
+  }
+
+  const cont = document.getElementById("destacados-container");
+  cont.innerHTML = data
+    .map(
+      (p) => ` 
       <div class="producto destacado">
-        <img src="https://backend-eternum-production.up.railway.app/uploads/${p.imagen}" 
+        <img src="${p.imagen}" 
              alt="${p.nombre}"
              onclick="location.href='producto.html?id=${p.id}'">
 
@@ -166,27 +168,16 @@ async function cargarDestacados() {
         <button class="add-to-cart" data-id="${p.id}">Agregar al carrito</button>
       </div>
     `,
-      )
-      .join("");
-  } catch (error) {
-    console.error("Error cargando destacados:", error);
-  }
+    )
+    .join("");
 }
 
 // ---------------------- PRUEBA FRONT → BACK ---------------------- //
-fetch("https://backend-eternum-production.up.railway.app/")
-  .then((res) => res.text())
-  .then((data) => {
-    console.log("Respuesta del backend:", data);
-  })
-  .catch((err) => {
-    console.error("Error al conectar con backend:", err);
-  });
 
-  async function testSupabase() {
-    const { data, error } = await supabaseClient.from('test').select('*')
-    console.log('DATA:', data)
-    console.log('ERROR:', error)
-  }
+async function testSupabase() {
+  const { data, error } = await supabaseClient.from("test").select("*");
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
+}
 
-  testSupabase();
+testSupabase();

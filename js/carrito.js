@@ -5,17 +5,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btnVaciar = document.getElementById("vaciar-carrito");
   const btnFinalizar = document.getElementById("finalizar");
 
-  // Traer productos desde backend
-  let productos = [];
-  try {
-    const res = await fetch(
-      "https://backend-eternum-production.up.railway.app/api/productos",
-    );
-    const json = await res.json();
-    productos = json.data;
-  } catch (e) {
-    console.error("Error cargando productos:", e);
-    alert("No se pudieron cargar los productos del servidor.");
+
+  const { data: productos, error } = await supabaseClient
+  .from("productos")
+  .select("*");
+
+  if(error) {
+    console.error(error);
+    alert("No se pudieron cargar los productos");
     return;
   }
 
@@ -58,14 +55,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      total += producto.precio * itemCarrito.cantidad;
+      total += precio * cantidad;
 
       const div = document.createElement("div");
       div.classList.add("carrito-item");
       div.dataset.id = producto.id;
 
       div.innerHTML = `
-        <img src="https://backend-eternum-production.up.railway.app/uploads/${producto.imagen}" class="img-item" alt="${producto.nombre}">
+        <img src="${producto.imagen}" class="img-item" alt="${producto.nombre}">
         <div class="info">
           <div class="texto">
             <h3>${producto.nombre}</h3>
@@ -84,13 +81,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (btnFinalizar) {
       if (btnFinalizar) {
         btnFinalizar.addEventListener("click", () => {
-          // Si el carrito está vacío, aviso
-          const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+          const carrito = obtenerCarrito();
           if (!carrito.length) {
             alert("El carrito está vacío");
             return;
           }
-
           // Redirigir al checkout
           window.location.href = "checkout.html";
         });
@@ -106,12 +101,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         carrito = carrito.filter((p) => Number(p.id) !== id);
         guardarCarrito(carrito);
         renderCarrito();
+        actualizarContadorCarrito();
       });
     });
   }
 
   function actualizarContadorCarrito() {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const carrito = obtenerCarrito();
     const total = carrito.reduce((acc, item) => acc + item.cantidad, 0);
     const span = document.getElementById("cart-count");
     if (span) span.textContent = total;
@@ -120,7 +116,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.actualizarContadorCarrito = actualizarContadorCarrito;
 
   function agregarAlCarrito(idProducto) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let carrito = obtenerCarrito();
 
     const existente = carrito.find((p) => Number(p.id) === Number(idProducto));
     if (existente) {
@@ -129,8 +125,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       carrito.push({ id: idProducto, cantidad: 1 });
     }
 
-    localStorage.setItem("carrito", JSON.stringify(carrito));
+    guardarCarrito(carrito);
     actualizarContadorCarrito();
+    renderCarrito();
   }
 
   window.agregarAlCarrito = agregarAlCarrito;
@@ -140,8 +137,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     btnVaciar.addEventListener("click", () => {
       localStorage.removeItem("carrito");
       renderCarrito();
+      actualizarContadorCarrito();
     });
   }
 
   renderCarrito();
+  actualizarContadorCarrito();
 });

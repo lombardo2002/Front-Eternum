@@ -1,29 +1,15 @@
 async function cargarOrdenes() {
-  const token = localStorage.getItem("token");
+  const { data: ordenes, error } = await supabaseClient
+  .from("ordenes")
+  .select("*")
+  .order("fecha", { ascending: false});
 
-  const res = await fetch(
-    "https://backend-eternum-production.up.railway.app/api/ordenes",
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    },
-  );
-
-  const json = await res.json();
-  console.log("Ordenes:", json);
-
-  if (!json.ok) {
-    alert("Sesión vencida. Volvé a iniciar sesión.");
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-    return;
-  }
+  if (error) return console.error(error);
 
   const tbody = document.getElementById("tabla-ordenes");
   tbody.innerHTML = "";
 
-  json.data.forEach((o) => {
+  ordenes.forEach((o) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
   <td>${o.id}</td>
@@ -47,54 +33,36 @@ async function cargarOrdenes() {
 
 async function actualizarEstado(id, select) {
   const estado = select.value;
-  const token = localStorage.getItem("token");
+  
+  const{ data, error } = await supabaseClient
+  .from("ordenes")
+  .update({ estado })
+  .eq("id", id);
 
-  const res = await fetch(
-    `https://backend-eternum-production.up.railway.app/api/ordenes/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      body: JSON.stringify({ estado }),
-    },
-  );
+  if (error) return console.error(error);
 
-  const data = await res.json();
-
-  if (!data.ok) {
-    return;
-  }
   const tr = select.closest("tr");
-  if (estado === "pagado") {
-    tr.classList.add("orden-pagada");
-  }
-  if (estado === "entregado") {
-    borrarOrden(id);
-  }
+  if (estado === "pagado") tr.classList.add("orden-pagada");
+  if (estado === "entregado") borrarOrden(id);
 }
 
 window.actualizarEstado = actualizarEstado;
 window.borrarOrden = borrarOrden;
 
 async function cargarProductos() {
-  const token = localStorage.getItem("token");
+  const { data: productos, error } = await supabaseClient
+  .from ("productos")
+  .select("*");
 
-  const res = await fetch(
-    "https://backend-eternum-production.up.railway.app/api/productos",
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    },
-  );
+  if (error) {
+    console.error("Error al cargar productos", error);
+    return;
+  }
 
-  const json = await res.json();
   const tbody = document.getElementById("tabla-productos");
   tbody.innerHTML = "";
 
-  json.data.forEach((p) => {
+  productos.forEach((p) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
     <td>${p.id}</td>
@@ -105,7 +73,7 @@ async function cargarProductos() {
     <td><input type="number" value="${p.stock}" /></td>
     <td><input value="${p.descripcion}" /></td>
     <td>
-    <img src="https://backend-eternum-production.up.railway.app/uploads/${p.imagen}" style="height:60px;border-radius:8px;">
+    <img src="${p.imagen}" style="height:60px;border-radius:8px;">
     </td>
     <td>
     <button onclick="editarProducto(${p.id}, this)">Editar</button>
@@ -117,69 +85,75 @@ async function cargarProductos() {
   });
 }
 
-async function editarProducto(id, btn) {
-  const tr = btn.parentElement.parentElement;
-  const inputs = tr.querySelectorAll("input");
+async function editarProducto(id, tr) {
+  const inputs = tr.querySelectorAll("input"); 
   const [nombre, material, tipo, precio, stock, descripcion] = [...inputs].map(
     (i) => i.value,
   );
 
-  await fetch(
-    `https://backend-eternum-production.up.railway.app/api/productos/${id}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombre,
-        material,
-        tipo,
-        precio,
-        stock,
-        descripcion,
-      }),
-    },
-  );
+  const { data, error } = await supabaseClient
+  .from("productos")
+  .update({
+    nombre,
+    material,
+    tipo,
+    precio: parseFloat(precio),
+    stock: parseInt(stock),
+    descripcion,
+  })
+  .eq("id", id);
+  
+  if (error) return console.error(error);
   alert("Producto actualizado");
   cargarProductos();
 }
 
 async function borrarProducto(id) {
-  if (!confirm("Borrar producto?")) return;
-  await fetch(
-    `https://backend-eternum-production.up.railway.app/api/productos/${id}`,
-    {
-      method: "DELETE",
-    },
-  );
-  alert("Producto borrado");
+  if (!confirm("Eliminar producto?")) return;
+
+  const { data, error } = await supabaseClient
+  .from("productos")
+  .delete()
+  .eq("id", id);
+
+  if(error) return console.error(error);
+  alert("Producto eliminado");
   cargarProductos();
 }
 
-document
-  .getElementById("form-agregar")
-  .addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form); // 👈 importante
+async function agregarProducto(form) {
+  const data = new FormData(form);
+  const file = data.get("imagen");
+  
+  const { data: uploadData, error: uploadError } = await supabaseClient
+  .storage
+  .from("productos")
+  .upload(`imagenes/${file.name}`, file);
 
-    const res = await fetch(
-      "https://backend-eternum-production.up.railway.app/api/productos",
-      {
-        method: "POST",
-        body: data, // 👈 sin headers
-      },
-    );
+  if (uploadError) return console.error(uploadError);
 
-    const json = await res.json();
+  const { publicUrl } =  supabaseClient
+  .storage
+  .from("productos")
+  .getPublicUrl(`imagenes/${file.name}`);
 
-    if (json.ok) {
-      alert("Producto agregado ✔️");
-      form.reset();
-      cargarProductos();
-    } else {
-      alert("Error al agregar producto");
-    }
-  });
+  const { data: prodData, error: prodError } = await supabaseClient
+  .from("productos")
+  .insert([{
+    nombre: data.get("nombre"),
+    material: data.get("material"),
+    tipo: data.get("tipo"),
+    precio: parseFloat(data.get("precio")),
+    stock: parseInt(data.get("stock")),
+    descripcion: data.get("descripcion"),
+    imagen: publicUrl,
+  }]);
+
+  if (prodError) return console.error(prodError);
+  alert("Producto agregado");
+  form.reset();
+  cargarProductos();
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   cargarOrdenes();
@@ -194,11 +168,14 @@ if (!usuario || usuario.rol !== "admin") {
 }
 
 async function borrarOrden(id) {
-  if (!confirm("Eliminar orden entregada?")) return;
-  await fetch(
-    `https://backend-eternum-production.up.railway.app/api/ordenes/${id}`,
-    { method: "DELETE" },
-  );
+  if (!confirm("Eliminar orden?")) return;
+
+  const { data, error } = await supabaseClient
+  .from("ordenes")
+  .delete()
+  .eq("id", id);
+
+  if (error) return console.error(error);
   alert("Orden eliminada");
   cargarOrdenes();
 }

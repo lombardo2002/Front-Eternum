@@ -1,39 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const titulo = document.getElementById("titulo-catalogo");
 
   const params = new URLSearchParams(window.location.search);
   const materialParam = params.get("material");
   const tipoParam = params.get("tipo");
 
-  let url = "https://backend-eternum-production.up.railway.app/api/productos";
-  const query = [];
+  let query = supabaseClient.from("productos").select("*");
 
-  if (materialParam) query.push(`material=${materialParam}`);
-  if (tipoParam) query.push(`tipo=${tipoParam}`);
+  if (materialParam) query.push("material", materialParam);
+  if (tipoParam) query.eq("tipo", tipoParam);
 
-  if (query.length) url += "?" + query.join("&");
+  const { data: productos, error } = await query;
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((json) => {
-      const productos = json.data;
+  if (error) {
+    console.error("Error cargano productos:", error);
+    titulo.textContent = "Error cargando productos.";
+    return;
+  }
 
-      if (!materialParam && !tipoParam) {
-        titulo.textContent = "Todos los productos ✨";
-      } else {
-        let t = "";
-        if (materialParam) t += materialParam.toUpperCase() + " ";
-        if (tipoParam)
-          t += tipoParam.charAt(0).toUpperCase() + tipoParam.slice(1);
-        titulo.textContent = t.trim();
-      }
+  if (!materialParam && !tipoParam) {
+    titulo.textContent = "Todos los productos ✨";
+  } else {
+    let t = "";
+    if (materialParam) t += materialParam.toUpperCase() + " ";
+    if (tipoParam) t += tipoParam.charAt(0).toUpperCase() + tipoParam.slice(1);
+    titulo.textContent = t.trim();
+  }
 
-      mostrarProductos(productos);
-    })
-    .catch((err) => {
-      console.error("Error cargando productos:", err);
-      titulo.textContent = "Error cargando productos.";
-    });
+  mostrarProductos(productos);
 });
 
 function agregarAlCarrito(idProducto, nombreProducto) {
@@ -43,22 +37,22 @@ function agregarAlCarrito(idProducto, nombreProducto) {
   const existente = carrito.find((item) => item.id === idProducto);
 
   if (existente) {
-    alert("⚠️ Este producto ya está en el carrito. Solo hay 1 unidad disponible.");
-    return; // 🚫 No hacemos nada más
+    alert(
+      "Este producto ya está en el carrito. Solo hay 1 unidad disponible.",
+    );
+    return;
   }
 
-  // Si no estaba, lo agregamos
+  // Si no estaba, se agrega
   carrito.push({
     id: idProducto,
     nombre: nombreProducto,
-    cantidad: 1
+    cantidad: 1,
   });
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
   actualizarContadorCarrito();
 }
-
-
 
 function mostrarProductos(lista) {
   const contenedor = document.getElementById("lista-productos");
@@ -70,24 +64,18 @@ function mostrarProductos(lista) {
   }
 
   lista.forEach((prod) => {
-    let imagenes = [];
-    if (prod.imagenes) {
-      try { imagenes = JSON.parse(prod.imagenes); } catch {}
-    }
-    if (!imagenes.length && prod.imagen) imagenes = [prod.imagen];
-
-    const imagenPrincipal = imagenes.length ? imagenes[0] : "placeholder.png";
+    const imagenPrincipal = prod.imagen || "placeholder.png";
 
     const card = document.createElement("div");
     card.classList.add("card-producto");
     card.innerHTML = `
-      <img src="https://backend-eternum-production.up.railway.app/uploads/${imagenPrincipal}" 
+      <img src="${imagenPrincipal}" 
            alt="${prod.nombre}"
            onclick="location.href='producto.html?id=${prod.id}'">
 
       <h3 onclick="location.href='producto.html?id=${prod.id}'">${prod.nombre}</h3>
 
-      <p class="desc">${prod.descripcion || ""}</p>
+      <p class="desc">${prod.desripcion || ""}</p>
       <p class="precio">$${prod.precio}</p>
 
       <button class="add-to-cart" data-id="${prod.id}">Agregar al carrito</button>
@@ -96,17 +84,15 @@ function mostrarProductos(lista) {
     contenedor.appendChild(card);
   });
 
-  // **Agregar listener después de que todos los productos están en el DOM**
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("add-to-cart")) {
-    const btn = e.target;
-    const card = btn.closest(".card-producto");
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-to-cart")) {
+      const btn = e.target;
+      const card = btn.closest(".card-producto");
 
-    const id = Number(btn.dataset.id);
-    const nombre = card.querySelector("h3").textContent;
+      const id = Number(btn.dataset.id);
+      const nombre = card.querySelector("h3").textContent;
 
-    agregarAlCarrito(id, nombre);
-  }
-});
-
+      agregarAlCarrito(id, nombre);
+    }
+  });
 }

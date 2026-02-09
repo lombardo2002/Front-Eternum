@@ -8,48 +8,54 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   if (!id) {
-    contenedor.innerHTML = "<p>ID de producto no encontrado.</p>";
+    console.error("No existe detalles del producto");
     return;
   }
 
-  try {
-    const res = await fetch(
-      `https://backend-eternum-production.up.railway.app/api/productos/${id}`,
-    );
-    const json = await res.json();
-    const prod = json.data || json; // por si viene envuelto en { data }
+  const { data: prod, error } = await supabaseClient
+    .from("productos")
+    .select("*")
+    .eq("id", id)
+    .single();
 
-    let imagenes = [];
+  if (error || !prod) {
+    console.error("Error al cargar productos:", error);
+    contenedor.innerHTML =
+      "<p>Error al cargar producto, estamos trabajando para solucionarlo </p>";
+    return;
+  }
 
-    if (prod.imagenes) {
-      try {
-        imagenes = JSON.parse(prod.imagenes);
-      } catch {
-        imagenes = [];
-      }
+  let imagenes = [];
+
+  if (prod.imagenes) {
+    try {
+      imagenes = JSON.parse(prod.imagenes);
+    } catch {
+      imagenes = [];
     }
+  }
 
-    if (!imagenes.length && prod.imagen) {
-      imagenes = [prod.imagen];
-    }
+  if (!imagenes.length && prod.imagen) {
+    imagenes = [prod.imagen];
+  }
 
-    const imagenPrincipal = imagenes[0] || "placeholder.png";
+  const imagenPrincipal = imagenes[0] || "placeholder.png";
 
-    const thumbs = imagenes
-      .map(
-        (img) => `
-        <img src="https://backend-eternum-production.up.railway.app/uploads/${img}"
+  const thumbs = imagenes
+    .map(
+      (img) => `
+        <img src="${img}"
              class="thumb"
              alt="${prod.nombre}">
       `,
-      )
-      .join("");
+    )
+    .join("");
 
-    contenedor.innerHTML = `
+  contenedor.innerHTML = `
       <div class="producto-layout">
         <div class="galeria">
           <img id="img-principal"
-               src="https://backend-eternum-production.up.railway.app/uploads/${imagenPrincipal}"
+               src="${imagenPrincipal}"
                class="img-grande">
 
           <div class="thumbs">${thumbs}</div>
@@ -66,20 +72,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>
     `;
 
-    // 👉 Eventos de las miniaturas
-    document.querySelectorAll(".thumb").forEach((img) => {
-      img.addEventListener("click", () => {
-        document.getElementById("img-principal").src = img.src;
-      });
+  //Eventos de las miniaturas
+  document.querySelectorAll(".thumb").forEach((img) => {
+    img.addEventListener("click", () => {
+      document.getElementById("img-principal").src = img.src;
     });
+  });
 
-    // 👉 Botón carrito
-    const btn = document.getElementById("btn-carrito");
-    if (btn && window.agregarAlCarrito) {
-      btn.addEventListener("click", () => agregarAlCarrito(prod.id));
-    }
-  } catch (error) {
-    console.error("Error al cargar producto:", error);
-    contenedor.innerHTML = "<p>Error al cargar el producto 😢</p>";
+  //Botón carrito
+  const btn = document.getElementById("btn-carrito");
+  if (btn && window.agregarAlCarrito) {
+    btn.addEventListener("click", () => agregarAlCarrito(prod.id));
   }
 });
