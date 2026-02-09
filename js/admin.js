@@ -1,3 +1,5 @@
+import {supabaseClient } from "./supabase.js";
+
 async function cargarOrdenes() {
   const { data: ordenes, error } = await supabaseClient
   .from("ordenes")

@@ -1,3 +1,5 @@
+import {supabaseClient } from "./supabase.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const contenedor = document.getElementById("detalle-producto");
   const id = new URLSearchParams(window.location.search).get("id");

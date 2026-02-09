@@ -1,3 +1,5 @@
+import {supabaseClient } from "./supabase.js";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   if (!carrito.length) {

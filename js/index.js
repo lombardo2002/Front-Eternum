@@ -1,3 +1,5 @@
+import {supabaseClient } from "./supabase.js";
+
 function agregarAlCarrito(idProducto) {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
