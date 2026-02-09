@@ -172,12 +172,3 @@ async function cargarDestacados() {
     .join("");
 }
 
-// ---------------------- PRUEBA FRONT → BACK ---------------------- //
-
-async function testSupabase() {
-  const { data, error } = await supabaseClient.from("test").select("*");
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
-}
-
-testSupabase();
