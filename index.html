@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eternum Joyas</title>
-
-    <!-- CSS PRINCIPAL -->
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/global.css" />
-    <!-- ICONOS -->
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -17,17 +15,14 @@
   </head>
 
   <body>
-    <!-- HEADER (cargado por include.js) -->
     <div id="header"></div>
 
     <main class="container">
-      <!-- HERO -->
       <section class="hero">
         <h1 class="logo">Eternum Joyas</h1>
         <p class="frase">Joyas que acompañan tus momentos más especiales.</p>
       </section>
 
-      <!-- CARRUSEL SIN BOOTSTRAP -->
       <div class="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
@@ -63,15 +58,16 @@
       </section>
     </main>
 
-    <!-- FOOTER -->
     <div id="footer"></div>
 
-    <!-- SCRIPTS -->
-    <script type="modelue" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script type="modelue" src="js/supabase.js"></script>
-    <script type="modelue" src="js/include.js"></script>
-    <script type="modelue" src="js/header.js"></script>
-    <script type="modelue" src="js/index.js"></script>
-    <script type="modelue" src="js/login.js"></script>
+    <script
+      type="modelue"
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+    <script type="module" src="js/supabase.js"></script>
+    <script type="module" src="js/include.js"></script>
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="js/index.js"></script>
+    <script type="module" src="js/login.js"></script>
   </body>
 </html>
